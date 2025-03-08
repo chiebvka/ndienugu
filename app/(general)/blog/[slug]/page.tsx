@@ -158,8 +158,12 @@ async function getData(slug: string) {
   return post
 }
 
-export default async function BlogPostPage(props: Props) {
-    const post = blogPosts.find((post) => post.slug === props.params.slug)
+export default function BlogPostPage({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const post = blogPosts.find((post) => post.slug === params.slug)
 
   if (!post) {
     notFound()
