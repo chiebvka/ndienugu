@@ -8,10 +8,10 @@ import { CalendarDays, Clock, ChevronLeft } from "lucide-react"
 import BlogPostSidebar from "@/components/blog-post-sidebar"
 import { Metadata } from "next"
 
-// type Props = {
-//   params: { slug: string }
-//   searchParams: Record<string, string | string[] | undefined>
-// }
+type Props = {
+  params: { slug: string }
+  searchParams: Record<string, string | string[] | undefined>
+}
 
 type BlogPostPageProps = {
     params: { slug: string }
@@ -158,12 +158,8 @@ async function getData(slug: string) {
   return post
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  const post = await getData(params.slug)
+export default async function BlogPostPage(props: Props) {
+    const post = blogPosts.find((post) => post.slug === props.params.slug)
 
   if (!post) {
     notFound()
