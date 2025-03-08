@@ -152,8 +152,18 @@ const blogPosts: BlogPost[] = [
   },
 ]
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = blogPosts.find((post) => post.slug === params.slug)
+async function getData(slug: string) {
+  const post = blogPosts.find((post) => post.slug === slug)
+  if (!post) return null
+  return post
+}
+
+export default async function BlogPostPage({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const post = await getData(params.slug)
 
   if (!post) {
     notFound()
