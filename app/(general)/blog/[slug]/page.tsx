@@ -8,15 +8,6 @@ import { CalendarDays, Clock, ChevronLeft } from "lucide-react"
 import BlogPostSidebar from "@/components/blog-post-sidebar"
 import { Metadata } from "next"
 
-type Props = {
-  params: { slug: string }
-  searchParams: Record<string, string | string[] | undefined>
-}
-
-type BlogPostPageProps = {
-    params: { slug: string }
-  }
-
 // This would typically come from a database or CMS
 const blogPosts: BlogPost[] = [
   {
@@ -152,17 +143,12 @@ const blogPosts: BlogPost[] = [
   },
 ]
 
-async function getData(slug: string) {
-  const post = blogPosts.find((post) => post.slug === slug)
-  if (!post) return null
-  return post
+type Props = {
+  params: { slug: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
 }
 
-export default function BlogPostPage({
-  params,
-}: {
-  params: { slug: string }
-}) {
+export default async function BlogPostPage({ params }: Props) {
   const post = blogPosts.find((post) => post.slug === params.slug)
 
   if (!post) {

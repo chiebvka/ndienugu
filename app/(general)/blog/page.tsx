@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import type { BlogPost } from "@/types"
 import BlogPostCard from "@/components/blog-post-card"
 import PageHeader from "@/components/page-header"
@@ -79,6 +78,9 @@ const blogPosts: BlogPost[] = [
     tags: ["Strategy", "Planning", "Development"],
   },
 ]
+'use client'
+
+import { useState } from 'react'
 
 export default function BlogPage() {
   const [activeTag, setActiveTag] = useState<string>("all")
