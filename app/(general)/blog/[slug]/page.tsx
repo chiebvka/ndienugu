@@ -8,10 +8,11 @@ import { CalendarDays, Clock, ChevronLeft } from "lucide-react"
 import BlogPostSidebar from "@/components/blog-post-sidebar"
 import { Metadata } from "next"
 
-type Props = {
+interface PageProps {
   params: {
     slug: string
   }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
 // This would typically come from a database or CMS
@@ -149,7 +150,7 @@ const blogPosts: BlogPost[] = [
   },
 ]
 
-export default function BlogPostPage({ params }: Props) {
+export default function BlogPostPage({ params, searchParams }: PageProps) {
   const post = blogPosts.find((post) => post.slug === params.slug)
 
   if (!post) {
