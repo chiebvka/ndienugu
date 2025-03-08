@@ -6,6 +6,13 @@ import ShareButtons from "@/components/share-buttons"
 import { formatDate } from "@/lib/utils"
 import { CalendarDays, Clock, ChevronLeft } from "lucide-react"
 import BlogPostSidebar from "@/components/blog-post-sidebar"
+import { Metadata } from "next"
+
+type Props = {
+  params: {
+    slug: string
+  }
+}
 
 // This would typically come from a database or CMS
 const blogPosts: BlogPost[] = [
@@ -142,11 +149,7 @@ const blogPosts: BlogPost[] = [
   },
 ]
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string }
-}) {
+export default function BlogPostPage({ params }: Props) {
   const post = blogPosts.find((post) => post.slug === params.slug)
 
   if (!post) {
