@@ -16,10 +16,11 @@ import Image from "next/image"
 import { Play, ImageIcon, Search, Calendar, X, ChevronLeft, ChevronRight } from "lucide-react"
 import { useMobile } from "@/hooks/use-mobile"
 
-// Extended GalleryItem type to include mediaType
+// Extended GalleryItem type to include mediaType and videoUrl
 interface EnhancedGalleryItem extends GalleryItem {
   mediaType: "image" | "video"
   tags?: string[]
+  videoUrl?: string
 }
 
 // This would typically come from a database or CMS
@@ -88,7 +89,8 @@ const galleryItems: EnhancedGalleryItem[] = [
     id: 7,
     title: "Annual Fundraising Gala",
     description: "A successful evening raising funds for our key initiatives.",
-    imageUrl: "https://yv78tqrpgx.ufs.sh/f/6zG49qUG7aw32UHmiKJGpuJeSib0A7zCkKjBHYr6UMhf8oXxi gbet thsi error message for this code ",
+    imageUrl: "/gallery7.jpeg", // Thumbnail for video
+    videoUrl: "https://yv78tqrpgx.ufs.sh/f/6zG49qUG7aw32UHmiKJGpuJeSib0A7zCkKjBHYr6UMhf8oXx",
     date: "2023-05-28",
     category: "Events",
     mediaType: "video",
@@ -98,7 +100,8 @@ const galleryItems: EnhancedGalleryItem[] = [
     id: 8,
     title: "Project Launch Event",
     description: "Officially launching our new community development project.",
-    imageUrl: "/gallery7.jpeg",
+    imageUrl: "/gallery7.jpeg", // Thumbnail for video
+    videoUrl: "https://yv78tqrpgx.ufs.sh/f/6zG49qUG7aw32UHmiKJGpuJeSib0A7zCkKjBHYr6UMhf8oXx",
     date: "2023-04-15",
     category: "Projects",
     mediaType: "video",
@@ -108,7 +111,8 @@ const galleryItems: EnhancedGalleryItem[] = [
     id: 9,
     title: "Community Health Workshop",
     description: "Educational workshop on health and wellness for community members.",
-    imageUrl: "/gallery5.jpeg",
+    imageUrl: "/gallery5.jpeg", // Thumbnail for video
+    videoUrl: "https://yv78tqrpgx.ufs.sh/f/6zG49qUG7aw32UHmiKJGpuJeSib0A7zCkKjBHYr6UMhf8oXx",
     date: "2023-03-20",
     category: "Workshops",
     mediaType: "video",
@@ -118,7 +122,8 @@ const galleryItems: EnhancedGalleryItem[] = [
     id: 10,
     title: "Volunteer Appreciation Day",
     description: "Celebrating the dedication and hard work of our volunteers.",
-    imageUrl: "/gallery6.jpeg",
+    imageUrl: "/gallery6.jpeg", // Thumbnail for video
+    videoUrl: "https://yv78tqrpgx.ufs.sh/f/6zG49qUG7aw32UHmiKJGpuJeSib0A7zCkKjBHYr6UMhf8oXx",
     date: "2023-02-15",
     category: "Events",
     mediaType: "video",
@@ -366,10 +371,12 @@ export default function GalleryPage() {
           <div className="relative aspect-video">
             {selectedItem.mediaType === "video" ? (
               <video
-                src={selectedItem.imageUrl}
+                src={selectedItem.videoUrl}
                 controls
+                autoPlay
+                playsInline
                 className="w-full h-full"
-                poster="/placeholder.svg"
+                poster={selectedItem.imageUrl}
               >
                 Your browser does not support the video tag.
               </video>
@@ -680,10 +687,12 @@ export default function GalleryPage() {
             <div className="relative aspect-video">
               {selectedItem?.mediaType === "video" ? (
                 <video
-                  src={selectedItem.imageUrl}
+                  src={selectedItem.videoUrl}
                   controls
+                  autoPlay
+                  playsInline
                   className="w-full h-full"
-                  poster="/placeholder.svg"
+                  poster={selectedItem.imageUrl}
                 >
                   Your browser does not support the video tag.
                 </video>
