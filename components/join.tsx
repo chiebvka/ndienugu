@@ -1,13 +1,69 @@
 'use client'
 
-import { ArrowDownWideNarrowIcon } from 'lucide-react'
+import {  FormInput } from 'lucide-react'
 import { useState } from 'react'
-import { Label } from './ui/label'
-import { Switch } from './ui/switch'
 import { Button } from './ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card"
+import { cn } from "@/lib/utils"
+import Link from 'next/link'
 
 
-export default function Join() {
+
+ 
+const notifications = [
+  {
+    title: "Supporting and collaborating with each other in any legitimate business ventures for the success of our families such as collective investments in Enugu State..",
+    description: "",
+  },
+  {
+    title: "Collaborating & being a strong partner to Umu Ada Enugu association in any legitimate venture or activities they embark on",
+    description: "",
+  },
+  {
+    title: "Harnessing any legitimate opportunities that we see or are invited to participate in in Enugu State Nigeria",
+    description: "",
+  },
+  {
+    title: "Support & promote the educational and mental well-being of the less privileged people in Enugu state through but not limited to offering educational scholarships and or enabling private small scale business ventures where possible",
+    description: "",
+  },
+  {
+    title: " Promoting the spirit of togetherness and brotherhood between NDI ENUGU and their families through social interactions",
+    description: "",
+  },
+  {
+    title: "Serving as the umbrella association under which Igbo men and women of Enugu origin, their wives, husbands, and children may come together in achieving the common goal of understanding and self-help",
+    description: "",
+  },
+  {
+    title: " Keeping Igbo traditions and customs alive as celebrated in our rich festivals and cultural institutions.",
+    description: "",
+  },
+  {
+    title: "Promoting the teaching of Igbo language and culture as well as any other beneficial subjects to our children in Scotland.",
+    description: "",
+  },
+  {
+    title: "Discouraging acrimony between members and their families by outsiders",
+    description: "",
+  },
+  {
+    title: "Fostering cultural understanding between Igbos and people from other Nationalities through the promotion of cultural exchange.",
+    description: "",
+  },
+]
+
+
+type CardProps = React.ComponentProps<typeof Card>
+
+export default function Join({ className, ...props }: CardProps) {
   const [agreed, setAgreed] = useState(false)
 
   return (
@@ -26,142 +82,41 @@ export default function Join() {
       </div>
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-balance text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Need to join</h2>
-        <p className="mt-2 text-lg/8 text-gray-600">Aute magna irure deserunt veniam aliqua magna enim voluptate.</p>
+        <p className="mt-2 text-lg/8 text-gray-600">Want to join and become a member? Fill in the form below and we will get back to you as soon as possible.</p>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-          <div>
-            <label htmlFor="first-name" className="block text-sm/6 font-semibold text-gray-900">
-              First name
-            </label>
-            <div className="mt-2.5">
-              <input
-                id="first-name"
-                name="first-name"
-                type="text"
-                autoComplete="given-name"
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-              />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="last-name" className="block text-sm/6 font-semibold text-gray-900">
-              Last name
-            </label>
-            <div className="mt-2.5">
-              <input
-                id="last-name"
-                name="last-name"
-                type="text"
-                autoComplete="family-name"
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-              />
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label htmlFor="company" className="block text-sm/6 font-semibold text-gray-900">
-              Company
-            </label>
-            <div className="mt-2.5">
-              <input
-                id="company"
-                name="company"
-                type="text"
-                autoComplete="organization"
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-              />
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label htmlFor="email" className="block text-sm/6 font-semibold text-gray-900">
-              Email
-            </label>
-            <div className="mt-2.5">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-              />
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label htmlFor="phone-number" className="block text-sm/6 font-semibold text-gray-900">
-              Phone number
-            </label>
-            <div className="mt-2.5">
-              <div className="flex rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                <div className="grid shrink-0 grid-cols-1 focus-within:relative">
-                  <select
-                    id="country"
-                    name="country"
-                    autoComplete="country"
-                    aria-label="Country"
-                    className="col-start-1 row-start-1 w-full appearance-none rounded-md py-2 pl-3.5 pr-7 text-base text-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  >
-                    <option>Scotland</option>
-                    <option>England</option>
-                    <option>Wales</option>
-                  </select>
-                  <ArrowDownWideNarrowIcon
-                    aria-hidden="true"
-                    className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                  />
-                </div>
-                <input
-                  id="phone-number"
-                  name="phone-number"
-                  type="text"
-                  placeholder="123-456-7890"
-                  className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
-                />
+      <Card className={cn("w-9/12 mx-auto", className)} {...props}>
+      <CardHeader className='flex items-center justify-between'>
+        <CardTitle>Membership</CardTitle>
+        <CardDescription>Before Submitting a memebership request here are outlined goals and objectives.</CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-4">
+        <div>
+          {notifications.map((notification, index) => (
+            <div
+              key={index}
+              className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
+            >
+              <span className="flex h-2 w-2 translate-y-1 rounded-full bg-enugu" />
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  {notification.title}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {notification.description}
+                </p>
               </div>
             </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label htmlFor="message" className="block text-sm/6 font-semibold text-gray-900">
-              Message
-            </label>
-            <div className="mt-2.5">
-              <textarea
-                id="message"
-                name="message"
-                rows={4}
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-                defaultValue={''}
-              />
-            </div>
-          </div>
-          <span className="flex gap-x-4 sm:col-span-2">
-            <div className="flex h-6 items-center">
-              <Switch
-              >
-                <span className="sr-only">Agree to policies</span>
-                <span
-                  aria-hidden="true"
-                  className="size-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out group-data-[checked]:translate-x-3.5"
-                />
-              </Switch>
-            </div>
-            <Label className="text-sm/6 text-gray-600">
-              By selecting this, you agree to our{' '}
-              <a href="#" className="font-semibold text-enugu">
-                privacy&nbsp;policy
-              </a>
-              .
-            </Label>
-          </span>
+          ))}
         </div>
-        <div className="mt-10">
-          <Button
-            type="submit"
-            className="block w-full rounded-md  px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-          >
-            Let's talk
-          </Button>
-        </div>
-      </form>
+      </CardContent>
+      <CardFooter>
+        <Button className="w-full" asChild>
+          <Link href="/members">
+            <FormInput className='mr-2' /> Register
+          </Link>
+        </Button>
+      </CardFooter>
+    </Card>
     </div>
   )
 }

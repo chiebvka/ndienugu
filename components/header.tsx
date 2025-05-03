@@ -5,10 +5,9 @@
  import { useState } from "react"
  import Link from "next/link"
  import Image from "next/image"
- import { Menu, Search, ChevronRight } from "lucide-react"
+ import { Menu } from "lucide-react"
  import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
- import { Input } from "@/components/ui/input"
- import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
+
  
  export default function Header() {
    const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -19,12 +18,12 @@
        <div className="container mx-auto px-4">
          <div className="flex items-center justify-between h-20 w-[85%] mx-auto">
            <Link href="/" className="flex items-center space-x-3">
-             <div className="relative h-16 w-16 rounded-full bg-white p-1">
+             <div className="relative h-20 w-20 rounded-full bg-white p-1">
                <Image
-                 src="/logo.png"
+                 src="/logo.jpeg"
                  alt="Organization Logo"
-                 width={60}
-                 height={60}
+                 width={130}
+                 height={130}
                  className="object-contain rounded-full"
                  priority
                />
@@ -45,6 +44,9 @@
              </Link>
              <Link href="/blog" className="hover:text-accent transition-colors">
                News
+             </Link>
+             <Link href="/members" className="hover:text-accent transition-colors">
+               Membership
              </Link>
              <Link href="/events" className="hover:text-accent transition-colors">
                Events
@@ -67,10 +69,10 @@
                    <SheetTitle className=" flex items-center gap-3">
                      <div className="relative h-10 w-10 rounded-full bg-white p-1">
                        <Image
-                         src="/logo.png"
+                         src="/logo.jpeg"
                          alt="Organization Logo"
-                         width={40}
-                         height={40}
+                         width={60}
+                         height={60}
                          className="object-contain"
                        />
                      </div>
@@ -87,6 +89,7 @@
                        <MobileNavLink href="/board" label="Board of Directors" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/gallery" label="Media Gallery" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/blog" label="News & Press" onClick={() => setIsSheetOpen(false)} />
+                       <MobileNavLink href="/members" label="Membership" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/events" label="Events" onClick={() => setIsSheetOpen(false)} />
                      </nav>
                    </div>

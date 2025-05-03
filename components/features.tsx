@@ -1,21 +1,46 @@
-import { Church, Cloud, Lock, Newspaper, School, Server } from "lucide-react"
+import { Church, Clock, Lock, MemoryStick, Newspaper, School, SchoolIcon, Users } from "lucide-react"
 
 const features = [
     {
       name: 'Development',
       description:
-        'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
+        'To facilitate contacts and to promote cultural interaction and understanding among members',
       icon: Newspaper,
     },
     {
       name: 'Community',
-      description: 'Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.',
+      description: 'To promote association and sense of belonging amongst all Igbos of Enugu origin in Aberdeen and Scotland',
       icon: School,
     },
     {
       name: 'Progress',
-      description: 'Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis.',
+      description: 'To provide support to members living within Scotland and surrounding communities.',
       icon: Church,
+    },
+    {
+      name: 'Family',
+      description: 'To work for the peace and progress of NDI ENUGU and their families in Scotland.',
+      icon: Clock,
+    },
+    {
+      name: 'Enlightenment',
+      description: 'To promote awareness of the Igbo culture amongst children born to Ndi Enugu families in the UK, whilst encouraging them to play their full role in the wider British society.',
+      icon: Lock,
+    },
+    {
+      name: 'Integration',
+      description: 'To advance the education of the public in Scotland and its environs, about Igbo history, language, music, art, literature, and culture.',
+      icon: SchoolIcon,
+    },
+    {
+      name: 'Collaboration',
+      description: ' To foster good relation and collaboration with other organizations and communities with similar interests',
+      icon: Users,
+    },
+    {
+      name: 'Membership',
+      description: ' To execute, facilitate and promote charitable and non-profit work in Enugu state',
+      icon: MemoryStick,
     },
   ]
   
@@ -31,8 +56,7 @@ const features = [
                   Our Goals
                 </p>
                 <p className="mt-6 text-lg/8 text-gray-600">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque,
-                  iste dolor cupiditate blanditiis ratione.
+                  Here are some of the goals of our goals and objectives
                 </p>
                 <dl className="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
                   {features.map((feature) => (
