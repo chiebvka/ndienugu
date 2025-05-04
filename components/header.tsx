@@ -36,9 +36,12 @@
              <Link href="/" className="hover:text-accent transition-colors">
                Home
              </Link>
-             <Link href="/board" className="hover:text-accent transition-colors">
-               Board
-             </Link>
+              <Link href="/board" className="hover:text-accent transition-colors">
+                Board
+              </Link>
+              <Link href="/about" className="hover:text-accent transition-colors">
+                About
+              </Link>
              <Link href="/gallery" className="hover:text-accent transition-colors">
                Gallery
              </Link>
@@ -87,6 +90,7 @@
                      <nav className="flex flex-col space-y-1">
                        <MobileNavLink href="/" label="Home" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/board" label="Board of Directors" onClick={() => setIsSheetOpen(false)} />
+                       <MobileNavLink href="/about" label="About" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/gallery" label="Media Gallery" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/blog" label="News & Press" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/members" label="Membership" onClick={() => setIsSheetOpen(false)} />

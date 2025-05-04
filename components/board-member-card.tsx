@@ -17,7 +17,7 @@ export default function BoardMemberCard({ member }: BoardMemberCardProps) {
             src={member.imageUrl || "/placeholder.svg"} 
             alt={member.name} 
             fill 
-            className="object-cover rounded-xl group-hover/card:shadow-xl" 
+            className="object-contain rounded-xl group-hover/card:shadow-xl" 
           />
         </CardItem>
         <CardItem translateZ="50" className="mt-4">
