@@ -86,8 +86,8 @@ export default function Join({ className, ...props }: CardProps) {
       </div>
       <Card className={cn("w-9/12 mx-auto", className)} {...props}>
       <CardHeader className='flex items-center justify-between'>
-        <CardTitle>Membership</CardTitle>
-        <CardDescription>Before Submitting a memebership request here are outlined goals and objectives.</CardDescription>
+        <CardTitle className='text-enugu'>Membership</CardTitle>
+        <CardDescription>Before Submitting a membership request here are outlined goals and objectives.</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div>

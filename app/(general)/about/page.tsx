@@ -173,7 +173,7 @@ export default function page({}: Props) {
                         </div>
                         <div className="relative h-80">
                         <Image
-                            src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byhkq14hrnPzk8gbaZuJ4BVx0RlXoSA9ds1e6M?height=400&width=600&query=first meeting of Nigerian association in Scotland"
+                            src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byGnT8r7tkSrU0hi93DmW2eynVJLofPl6QECFG?height=400&width=600&query=first meeting of Nigerian association in Scotland"
                             alt="First NESA Meeting"
                             fill
                             className="object-cover"

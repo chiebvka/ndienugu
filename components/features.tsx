@@ -56,7 +56,7 @@ const features = [
                   Our Goals
                 </p>
                 <p className="mt-6 text-lg/8 text-gray-600">
-                  Here are some of the goals of our goals and objectives
+                  Here are some of our main goals and objectives
                 </p>
                 <dl className="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
                   {features.map((feature) => (
