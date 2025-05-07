@@ -16,15 +16,15 @@
    return (
      <header className="bg-gradient-primary z-50 text-white shadow-md">
        <div className="container mx-auto px-4">
-         <div className="flex items-center justify-between h-20 w-[85%] mx-auto">
+         <div className="flex items-center justify-between h-28 w-[85%] mx-auto">
            <Link href="/" className="flex items-center space-x-3">
-             <div className="relative h-20 w-20 rounded-full bg-white p-1">
+             <div className="relative h-24 w-32  p-1">
                <Image
-                 src="/logo.jpeg"
+                 src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byzCf4RmIO8nuAjdVXYCmhDBUgEqwfS5evctoI"
                  alt="Organization Logo"
                  width={130}
                  height={130}
-                 className="object-contain rounded-full"
+                 className="object-cover "
                  priority
                />
              </div>
