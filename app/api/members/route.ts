@@ -55,6 +55,8 @@ try {
     .from('membership').insert({
     name: `${firstName} ${lastName}`,
     dob: dob,
+    first_name: firstName,
+    last_name: lastName,
     email,
     mobile,
     address,
