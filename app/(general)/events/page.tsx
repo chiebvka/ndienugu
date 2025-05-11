@@ -1,90 +1,111 @@
+"use client"; // Make it a client component
+
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
 import EventCard from "@/components/event-card"
 import PageHeader from "@/components/page-header"
-import type { Event } from "@/types"
+import { Button } from "@/components/ui/button"
+import type { Tables } from "@/types/supabase"
+import { toast } from "sonner";
 
-
-// This would typically come from a database or CMS
-const events: Event[] = [
-  {
-    id: 1,
-    title: "Annual General Meeting 2025",
-    description:
-      "Join us for our Annual General Meeting where we will review our achievements, discuss future plans, and elect new board members.",
-    date: "2025-04-15",
-    time: "10:00 AM - 2:00 PM",
-    location: "Organization Headquarters, Main Conference Room",
-    imageUrl: "/event1.jpeg?height=300&width=600",
-    requirements: [
-      "Membership ID required for voting",
-      "RSVP by April 5th",
-      "Bring a copy of the annual report (will be emailed in advance)",
-    ],
-    registrationLink: "#",
-  },
-  {
-    id: 2,
-    title: "Community Development Workshop",
-    description: "A hands-on workshop focused on sustainable community development practices and project planning.",
-    date: "2025-03-22",
-    time: "9:00 AM - 4:00 PM",
-    location: "Community Center, Workshop Room B",
-    imageUrl: "/event2.jpeg?height=300&width=600",
-    requirements: [
-      "Open to all community members",
-      "Registration required (limited to 30 participants)",
-      "Participants should bring notebooks and laptops if possible",
-    ],
-    registrationLink: "#",
-  },
-  {
-    id: 3,
-    title: "Fundraising Gala Dinner",
-    description:
-      "An elegant evening to raise funds for our education initiatives, featuring guest speakers and entertainment.",
-    date: "2025-05-10",
-    time: "6:30 PM - 10:00 PM",
-    location: "Grand Hotel, Ballroom",
-    imageUrl: "/event3.jpeg?height=300&width=600",
-    requirements: [
-      "Formal attire required",
-      "Tickets: $100 per person or $900 for a table of 10",
-      "RSVP by April 25th with dietary requirements",
-    ],
-    registrationLink: "#",
-  },
-  {
-    id: 4,
-    title: "Strategic Planning Retreat",
-    description: "A two-day retreat for board members and senior staff to develop our next three-year strategic plan.",
-    date: "2025-06-15",
-    time: "9:00 AM (Day 1) - 4:00 PM (Day 2)",
-    location: "Riverside Resort and Conference Center",
-    imageUrl: "/event4.jpeg?height=300&width=600",
-    requirements: [
-      "For board members and invited staff only",
-      "Overnight accommodation provided",
-      "Bring organizational documents and reports as specified in pre-retreat email",
-    ],
-    registrationLink: "#",
-  },
-  {
-    id: 5,
-    title: "Community Health Fair",
-    description: "A free health fair offering screenings, information, and resources to community members.",
-    date: "2025-07-08",
-    time: "10:00 AM - 3:00 PM",
-    location: "Community Park",
-    imageUrl: "/event1.jpeg?height=300&width=600",
-    requirements: [
-      "Open to all community members",
-      "No registration required",
-      "Bring identification for certain health screenings",
-    ],
-    registrationLink: "#",
-  },
-]
+// Define the type for a single event based on your Supabase 'events' table
+type EventType = Tables<"events">; // This is the direct row type from Supabase
 
 export default function EventsPage() {
+  const [events, setEvents] = useState<EventType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const LIMIT = 5;
+
+  const fetchEvents = useCallback(async (pageNum: number, reset = false) => {
+    if (isLoading) return;
+    setIsLoading(true);
+    console.log(`EventsPage: Fetching events - page: ${pageNum}, reset: ${reset}`);
+    try {
+      const response = await axios.get("/api/events", {
+        params: { page: pageNum, limit: LIMIT },
+      });
+      
+      console.log("EventsPage: API Response data:", response.data);
+      const { events: newEvents, total } = response.data;
+
+      if (!Array.isArray(newEvents)) {
+        console.error("EventsPage: API did not return 'events' as an array.", response.data);
+        toast.error("Failed to process events from server.");
+        setEvents(reset ? [] : events);
+        setHasMore(false);
+        return;
+      }
+
+      setEvents((prevEvents) => (reset ? newEvents : [...prevEvents, ...newEvents]));
+      setHasMore(pageNum * LIMIT < total);
+      setPage(pageNum);
+
+    } catch (error: any) {
+      console.error("EventsPage: Error fetching events:", error);
+      if (error.response) {
+        toast.error(`Failed to fetch events: ${error.response.data?.error || error.response.statusText || 'Server error'}`);
+      } else {
+        toast.error("Failed to fetch events: An unexpected error occurred.");
+      }
+       if(reset) setEvents([]);
+       setHasMore(false);
+    } finally {
+      setIsLoading(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, LIMIT, events]); // Include 'events' if used in setEvents for concatenation
+
+  useEffect(() => {
+    fetchEvents(1, true); // Fetch initial page of events
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // fetchEvents is memoized
+
+  const handleViewMore = () => {
+    if (!isLoading && hasMore) {
+      fetchEvents(page + 1);
+    }
+  };
+  
+  // Adapt EventCard to accept EventType (Supabase row) or map fields here
+  // For now, assuming EventCard can handle the fields directly or you will adapt it.
+  // Key fields from Supabase 'events' to map to existing EventCard props if needed:
+  // event.name -> title
+  // event.summary or event.content -> description
+  // event.event_date -> date
+  // event.event_time -> time
+  // event.venue -> location
+  // event.id is already string
+  // imageUrl, requirements, registrationLink will need to be sourced or EventCard adapted.
+  // For a quick pass, let's try to map to the structure EventCard expects:
+  const mapSupabaseEventToCardProps = (eventData: EventType) => ({
+    id: eventData.id, // Supabase ID is string, original dummy data was number. Ensure EventCard handles string ID.
+    title: eventData.name || "Untitled Event",
+    description: eventData.summary || eventData.content || "No description available.",
+    date: eventData.event_date || "TBD",
+    time: eventData.event_time || eventData.start_time || "TBD",
+    location: eventData.venue || "TBD",
+    // These fields are not directly in the Supabase 'events' table by default
+    // You'll need to add them or adapt EventCard
+    imageUrl: `/event-placeholder.jpeg?height=300&width=600`, // Placeholder
+    requirements: eventData.content ? eventData.content.split('\n').slice(0,3) : ["Details to be confirmed."], // Example parsing
+    registrationLink: "#", // Placeholder
+  });
+
+
+  if (isLoading && events.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-12 text-center">
+        <PageHeader
+          title="Upcoming Events"
+          description="Stay informed about our organization's upcoming events, meetings, and activities."
+        />
+        <p className="mt-12">Loading events...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 py-12">
       <PageHeader
@@ -93,11 +114,28 @@ export default function EventsPage() {
       />
 
       <div className="max-w-7xl mx-auto">
-        <div className="space-y-8 mt-12">
-          {events.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </div>
+        {events.length === 0 && !isLoading && !hasMore ? (
+          <p className="text-center text-muted-foreground mt-12">
+            No upcoming events found at the moment. Please check back later!
+          </p>
+        ) : (
+          <div className="space-y-8 mt-12">
+            {events.map((eventData) => (
+              <EventCard key={eventData.id} event={mapSupabaseEventToCardProps(eventData)} />
+            ))}
+          </div>
+        )}
+
+        {hasMore && (
+          <div className="mt-12 text-center">
+            <Button onClick={handleViewMore} disabled={isLoading} variant="outline">
+              {isLoading ? "Loading..." : "View More Events"}
+            </Button>
+          </div>
+        )}
+         {!isLoading && !hasMore && events.length > 0 && (
+            <p className="text-center text-muted-foreground mt-12 py-4">You&apos;ve seen all upcoming events.</p>
+        )}
       </div>
     </div>
   )

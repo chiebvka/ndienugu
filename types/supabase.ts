@@ -121,17 +121,37 @@ export type Database = {
       event_participant: {
         Row: {
           created_at: string
+          event_id: string | null
+          gender: string | null
           id: string
+          person: number | null
+          type: string | null
         }
         Insert: {
           created_at?: string
+          event_id?: string | null
+          gender?: string | null
           id?: string
+          person?: number | null
+          type?: string | null
         }
         Update: {
           created_at?: string
+          event_id?: string | null
+          gender?: string | null
           id?: string
+          person?: number | null
+          type?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "event_participant_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       events: {
         Row: {

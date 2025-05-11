@@ -18,9 +18,26 @@
        <div className="container mx-auto px-4">
          <div className="flex items-center justify-between h-28 w-[85%] mx-auto">
            <Link href="/" className="flex items-center space-x-3">
-             <div className="relative h-24 w-32  p-1">
+             <div className="relative flex h-24 w-32  p-1">
+
+               <Image
+                 src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byzmFyEiIO8nuAjdVXYCmhDBUgEqwfS5evctoI"
+                 alt="Organization Logo"
+                 width={130}
+                 height={130}
+                 className="object-cover "
+                 priority
+               />
                <Image
                  src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byzCf4RmIO8nuAjdVXYCmhDBUgEqwfS5evctoI"
+                 alt="Organization Logo"
+                 width={130}
+                 height={130}
+                 className="object-cover "
+                 priority
+               />
+               <Image
+                 src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19bycob1a9vTLp7NMbw0sOJUx6CKTmSXByEAgqYR"
                  alt="Organization Logo"
                  width={130}
                  height={130}

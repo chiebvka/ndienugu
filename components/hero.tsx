@@ -11,22 +11,22 @@ export default function Hero() {
 
   const slides = [
     {
-      title: "Working Together for a Better Community",
-      description: "Dedicated to sustainable development and collaborative growth through strategic initiatives.",
+      title: "Welcome to Ndi Enugu Scotland Association",
+      description: "The Ndi Enugu Scotland Association (NESA) is a distinguished community of Ndi Enugu residing in Scotland, dedicated to fostering unity, cultural heritage, and progressive development both within their Scottish diaspora and their homeland in Enugu",
       image: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byVZvOUtPEsYNLv4rwhS0WaH9XVRZjOkIA3CBg?height=800&width=1600",
       cta: "Upcoming Events",
       link: "/events",
     },
     {
       title: "Building a Sustainable Future",
-      description: "Creating lasting impact through innovative solutions and community partnerships.",
+      description: "The journey of NESA has just begun, and its future is bright. The association stands as a beacon of hope, a bridge between two worlds, and a model for other communities striving to make a meaningful impact both at home and abroad.",
       image: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byhkq14hrnPzk8gbaZuJ4BVx0RlXoSA9ds1e6M?height=800&width=1600",
       cta: "Our Initiatives",
       link: "/blog",
     },
     {
       title: "Empowering Communities through Education",
-      description: "Supporting local growth and development through targeted programs and resources.",
+      description: "Through these engagements, NESA has established itself as a vibrant and forward-thinking association, embodying the resilience, excellence, and communal spirit of Ndi Enugu in the diaspora",
       image: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byGnT8r7tkSrU0hi93DmW2eynVJLofPl6QECFG?height=800&width=1600",
       cta: "Get Involved",
       link: "/events",
@@ -82,7 +82,7 @@ export default function Hero() {
               style={{ display: activeSlide === index ? "block" : "none" }}
             >
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">{slide.title}</h1>
-              <p className="text-xl md:text-2xl mb-8">{slide.description}</p>
+              <p className="text-sm md:text-lg mb-8">{slide.description}</p>
               <div className="flex flex-wrap gap-4">
                 <Link
                   href={slide.link}
