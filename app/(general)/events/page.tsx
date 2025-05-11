@@ -79,19 +79,44 @@ export default function EventsPage() {
   // event.id is already string
   // imageUrl, requirements, registrationLink will need to be sourced or EventCard adapted.
   // For a quick pass, let's try to map to the structure EventCard expects:
-  const mapSupabaseEventToCardProps = (eventData: EventType) => ({
-    id: eventData.id, // Supabase ID is string, original dummy data was number. Ensure EventCard handles string ID.
-    title: eventData.name || "Untitled Event",
-    description: eventData.summary || eventData.content || "No description available.",
-    date: eventData.event_date || "TBD",
-    time: eventData.event_time || eventData.start_time || "TBD",
-    location: eventData.venue || "TBD",
-    // These fields are not directly in the Supabase 'events' table by default
-    // You'll need to add them or adapt EventCard
-    imageUrl: `/event-placeholder.jpeg?height=300&width=600`, // Placeholder
-    requirements: eventData.content ? eventData.content.split('\n').slice(0,3) : ["Details to be confirmed."], // Example parsing
-    registrationLink: "#", // Placeholder
-  });
+  const mapSupabaseEventToCardProps = (eventData: EventType) => {
+    let displayTime = "TBD";
+
+    const formatToHourMinuteOnly = (timeStr: string | null | undefined): string | null => {
+      if (!timeStr) return null;
+      // Check if it's in HH:MM:SS or HH:MM format, or includes AM/PM
+      // This regex is a bit more general: looks for HH:MM and optionally seconds or AM/PM
+      const match = timeStr.match(/(\d{1,2}:\d{2})(?::\d{2})?(\s*(?:AM|PM))?/i);
+      if (match) {
+        // match[1] is HH:MM, match[2] is optional AM/PM part (including leading space)
+        return match[1] + (match[2] ? match[2].toUpperCase() : ''); 
+      }
+      return timeStr; // Fallback if format is unexpected
+    };
+
+    const formattedStartTime = formatToHourMinuteOnly(eventData.start_time);
+    const formattedEndTime = formatToHourMinuteOnly(eventData.end_time);
+    const formattedEventTime = formatToHourMinuteOnly(eventData.event_time); // Fallback
+
+    if (formattedStartTime && formattedEndTime) {
+      displayTime = `${formattedStartTime} - ${formattedEndTime}`;
+    } else if (formattedStartTime) {
+      displayTime = formattedStartTime;
+    } else if (formattedEventTime) { // Fallback to single event_time if start/end are not present
+      displayTime = formattedEventTime;
+    }
+
+    return {
+      id: eventData.id,
+      title: eventData.name || "Untitled Event",
+      description: eventData.summary || eventData.content || "No description available.",
+      date: eventData.event_date || "TBD",
+      time: displayTime, // Use the formatted displayTime
+      location: eventData.venue || "TBD",
+      imageUrl: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byGuCaj5tkSrU0hi93DmW2eynVJLofPl6QECFG", // Updated image URL
+      requirements: eventData.content ? eventData.content.split('\n').slice(0,3) : ["Details to be confirmed."],
+    };
+  };
 
 
   if (isLoading && events.length === 0) {

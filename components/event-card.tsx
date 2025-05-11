@@ -30,7 +30,7 @@ export default function EventCard({ event }: EventCardProps) {
     <div id={`event-${event.id}`} className="bg-white rounded-lg border border-rounded border-enugu shadow-md overflow-hidden">
       <div className="md:flex">
         <div className="md:w-1/3 relative h-64 md:h-auto">
-          <Image src={event.imageUrl || "/placeholder.svg"} alt={event.title} fill className="object-cover" />
+          <Image src={event.imageUrl || "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byGuCaj5tkSrU0hi93DmW2eynVJLofPl6QECFG"} alt={event.title} fill className="object-cover" />
         </div>
         <div className="p-6 md:w-2/3 flex flex-col justify-between">
           <div>

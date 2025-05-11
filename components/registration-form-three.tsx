@@ -110,7 +110,7 @@ export default function RegistrationFormThree({
                     <Calendar className="mr-2 h-4 w-4" />
                     <span>{eventDate}</span>
                   </div>
-                  {eventTime && <div className="flex items-center">
+                  {eventTime && eventTime !== "TBD" && <div className="flex items-center"> 
                     <Clock className="mr-2 h-4 w-4" />
                     <span>{eventTime}</span>
                   </div>}

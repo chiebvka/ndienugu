@@ -120,28 +120,34 @@ export type Database = {
       }
       event_participant: {
         Row: {
+          adult: number | null
           created_at: string
           event_id: string | null
-          gender: string | null
+          females: number | null
           id: string
-          person: number | null
-          type: string | null
+          kids: number | null
+          males: number | null
+          people: number | null
         }
         Insert: {
+          adult?: number | null
           created_at?: string
           event_id?: string | null
-          gender?: string | null
+          females?: number | null
           id?: string
-          person?: number | null
-          type?: string | null
+          kids?: number | null
+          males?: number | null
+          people?: number | null
         }
         Update: {
+          adult?: number | null
           created_at?: string
           event_id?: string | null
-          gender?: string | null
+          females?: number | null
           id?: string
-          person?: number | null
-          type?: string | null
+          kids?: number | null
+          males?: number | null
+          people?: number | null
         }
         Relationships: [
           {
