@@ -80,11 +80,11 @@ export default function Join({ className, ...props }: CardProps) {
           className="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
         />
       </div>
-      <div className="mx-auto max-w-2xl text-center">
+      <div className="mx-auto max-w-6xl text-center">
         <h2 className="text-balance text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Need to join</h2>
-        <p className="mt-2 text-lg/8 text-gray-600">Want to join and become a member? Fill in the form below and we will get back to you as soon as possible.</p>
+        <p className="mt-2 md:text-lg/8 text-gray-600">Want to join and become a member? Fill in the form below and we will get back to you as soon as possible.</p>
       </div>
-      <Card className={cn("w-9/12 mx-auto", className)} {...props}>
+      <Card className={cn("md:w-9/12 mx-auto mt-4", className)} {...props}>
       <CardHeader className='flex items-center justify-between'>
         <CardTitle className='text-enugu'>Membership</CardTitle>
         <CardDescription>Before Submitting a membership request here are outlined goals and objectives.</CardDescription>
