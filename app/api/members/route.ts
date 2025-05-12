@@ -44,36 +44,54 @@ export async function POST(request: NextRequest) {
 
   const parsed = formSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.format() }, { status: 400 });
+    console.error("Form validation failed:", parsed.error.format());
+    return NextResponse.json({ error: "Invalid form data.", details: parsed.error.format() }, { status: 400 });
   }
 
   const {
     firstName, lastName, dobDay, dobMonth, email, mobile, address, lga, bio
   } = parsed.data;
-try {
-  
-  const { error } = await supabase
-    .from('membership').insert({
-    name: `${firstName} ${lastName}`,
-    dob: null,
-    first_name: firstName,
-    last_name: lastName,
-    email,
-    mobile,
-    address,
-    lga,
-    bio,
-    status: 'pending',
-    dob_month: dobMonth,
-  });
 
-  console.log('Inserting data:', parsed.data)
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  try {
+    console.log('Attempting to insert data:', {
+      name: `${firstName} ${lastName}`,
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      mobile,
+      address,
+      lga,
+      bio,
+      status: 'pending',
+      dob_day: dobDay,
+      dob_month: dobMonth,
+    });
+
+    const { error } = await supabase
+      .from('membership').insert({
+        name: `${firstName} ${lastName}`,
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        mobile,
+        address,
+        lga,
+        bio,
+        status: 'pending',
+        dob_day: dobDay,
+        dob_month: dobMonth,
+      });
+
+    if (error) {
+      console.error('Supabase Insert Error:', error);
+      return NextResponse.json({ error: `Database error: ${error.message}` }, { status: 500 });
+    }
+
+    console.log('Submission successful for:', email);
+    return NextResponse.json({ message: 'Submission received!' }, { status: 200 });
+
+  } catch (err: any) {
+    console.error('API Route General Error:', err);
+    return NextResponse.json({ error: 'An unexpected server error occurred. Please try again later.' }, { status: 500 });
   }
-  return NextResponse.json({ message: 'Submission received!' }, { status: 200 });
-} catch (err) {
-  console.error('API Error:', err)
-  return NextResponse.json({ error: 'Server error. Please try again later.' }, { status: 500 })
-}
 }
