@@ -123,18 +123,18 @@ export default async function Page({
   params: Promise<{ slug: string }>
 }) {
   // Await the promise first to get the actual parameters object
-  const resolvedParams = await params;
+  const { slug } = await params
+
 
   // Now, validate the slug from the resolved object
-  if (!resolvedParams || typeof resolvedParams.slug !== 'string' || resolvedParams.slug.trim() === "") {
-    console.error("[Page] Error: Slug is missing, not a string, or empty in resolved params:", resolvedParams);
+  if (!slug || typeof slug !== 'string' || slug.trim() === "") {
+    console.error("[Page] Error: Slug is missing, not a string, or empty in resolved params:", slug);
     notFound();
     // Return null is technically not needed after notFound(), but can satisfy some linters
     return null;
   }
 
   // Use the validated slug
-  const slug = resolvedParams.slug;
   const post = await getPostBySlug(slug);
 
   if (!post) {
