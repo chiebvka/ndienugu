@@ -66,38 +66,28 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-3">
-              <li className="flex items-start">
-                <MapPin size={20} className="mr-2 mt-1 flex-shrink-0" />
-                <span>123 Organization Street, City, State, ZIP</span>
-              </li>
-              <li className="flex items-center">
-                <Phone size={20} className="mr-2 flex-shrink-0" />
-                <span>+1 (234) 567-8901</span>
-              </li>
               <li className="flex items-center">
                 <Mail size={20} className="mr-2 flex-shrink-0" />
-                <span>info@organization.org</span>
+                <a href="mailto:info@ndienuguscotland.org" className="hover:text-accent transition-colors">
+                  info@ndienuguscotland.org
+                </a>
               </li>
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Newsletter</h3>
-            <p className="mb-4">Subscribe to our newsletter to receive updates on our activities and events.</p>
-            <form className="space-y-2">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="w-full px-4 py-2 rounded-md bg-white/10 text-white placeholder-white/70 border border-white/20 focus:outline-none focus:border-accent"
-                required
-              />
-              <button
-                type="submit"
-                className="w-full px-4 py-2 bg-accent text-black font-medium rounded-md hover:bg-accent/90 transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
+          <div className="md:col-span-2 lg:col-span-1 flex flex-col items-start">
+            <h3 className="text-lg font-semibold mb-4">Have an Inquiry?</h3>
+            <p className="mb-4">
+              We&apos;d love to hear from you. Click the button below to send us an email.
+            </p>
+            <a
+              href={`mailto:info@ndienuguscotland.org?subject=${encodeURIComponent("Inquiry from NdiEnugu Scotland Website")}&body=${encodeURIComponent(
+                "Hello NdiEnugu Scotland Team,\n\nI would like to make an inquiry.\n\nName: [Please enter your name]\n\nContact Details: [Please enter your phone or preferred contact]\n\nInquiry:\n[Please describe your inquiry here]\n\nThank you"
+              )}`}
+              className="w-full px-6 py-3 bg-accent text-black font-medium rounded-md hover:bg-accent/90 transition-colors text-center inline-block"
+            >
+              Send an Inquiry
+            </a>
           </div>
         </div>
 

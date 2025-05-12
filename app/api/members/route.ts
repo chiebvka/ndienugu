@@ -5,7 +5,8 @@ import { createClient } from '@/utils/supabase/server';
 const formSchema = z.object({
   firstName: z.string().min(2),
   lastName: z.string().min(2),
-  dob: z.string().datetime(), // ISO string from new Date()
+  dobDay: z.string().min(1, "Day of birth is required"),
+  dobMonth: z.string().min(1, "Month of birth is required"),
   email: z.string().email(),
   mobile: z.string().min(11).regex(/^[0-9+]+$/),
   address: z.string().min(10),
@@ -47,14 +48,14 @@ export async function POST(request: NextRequest) {
   }
 
   const {
-    firstName, lastName, dob, email, mobile, address, lga, bio
+    firstName, lastName, dobDay, dobMonth, email, mobile, address, lga, bio
   } = parsed.data;
 try {
   
   const { error } = await supabase
     .from('membership').insert({
     name: `${firstName} ${lastName}`,
-    dob: dob,
+    dob: null,
     first_name: firstName,
     last_name: lastName,
     email,
@@ -63,6 +64,7 @@ try {
     lga,
     bio,
     status: 'pending',
+    dob_month: dobMonth,
   });
 
   console.log('Inserting data:', parsed.data)

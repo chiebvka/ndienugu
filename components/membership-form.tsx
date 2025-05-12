@@ -11,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useForm, Controller, FormProvider } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod";
-import { contactInfoSchema, locationInfoSchema, personalInfoSchema, profileInfoSchema } from '@/lib/validation/memeber';
+import { contactInfoSchema, locationInfoSchema, profileInfoSchema } from '@/lib/validation/memeber';
 import { toast } from 'sonner';
 import axios from 'axios';
 
@@ -37,8 +37,18 @@ const lgas = [
   ]
 
 
-  // Combine all schemas into one
-const formSchema = personalInfoSchema.merge(contactInfoSchema).merge(locationInfoSchema).merge(profileInfoSchema)
+  // Define the personal info schema part without dobYear and age validation
+  // User should update the actual personalInfoSchema in @/lib/validation/memeber.ts accordingly
+  const adjustedPersonalInfoSchema = z.object({
+    firstName: z.string().min(2, "First name is required"),
+    lastName: z.string().min(2, "Last name is required"),
+    dobDay: z.string().nonempty("Day is required"),
+    dobMonth: z.string().nonempty("Month is required"),
+    // dobYear removed
+  });
+  
+  // Combine all schemas into one, using the adjusted personal info schema
+const formSchema = adjustedPersonalInfoSchema.merge(contactInfoSchema).merge(locationInfoSchema).merge(profileInfoSchema)
 
 // Type for our form data
 type FormData = z.infer<typeof formSchema>
@@ -59,7 +69,6 @@ export default function Membershipform({}: Props) {
       lastName: "",
       dobDay: "",
       dobMonth: "",
-      dobYear: "",
       email: "",
       mobile: "",
       address: "",
@@ -92,8 +101,6 @@ export default function Membershipform({}: Props) {
       "November",
       "December",
     ]
-    const currentYear = new Date().getFullYear()
-    const years = Array.from({ length: 100 }, (_, i) => String(currentYear - 18 - i))
   
 
     const onSubmit = async (data: FormData) => {
@@ -101,11 +108,6 @@ export default function Membershipform({}: Props) {
       
         const formattedData = {
           ...data,
-          dob: new Date(
-            Number.parseInt(data.dobYear),
-            months.indexOf(data.dobMonth),
-            Number.parseInt(data.dobDay)
-          ).toISOString(),
         }
 
       
@@ -127,7 +129,7 @@ export default function Membershipform({}: Props) {
   
       switch (currentStep) {
         case 1:
-          fieldsToValidate = ["firstName", "lastName", "dobDay", "dobMonth", "dobYear"]
+          fieldsToValidate = ["firstName", "lastName", "dobDay", "dobMonth"]
           break
         case 2:
           fieldsToValidate = ["email", "mobile"]
@@ -139,47 +141,6 @@ export default function Membershipform({}: Props) {
           fieldsToValidate = ["bio"]
           break
       }
-
-
-        // Handle form submission
-        // const onSubmit = (data: FormData) => {
-        //     // Create a proper date from the separate fields
-        //     const formattedData = {
-        //     ...data,
-        //     dob: new Date(Number.parseInt(data.dobYear), months.indexOf(data.dobMonth), Number.parseInt(data.dobDay)),
-        //     }
-
-        //     console.log("Form submitted:", formattedData)
-        //     setIsComplete(true)
-        //     // Here you would typically send the data to your API
-        // }
-
-        // const onSubmit = async (data: FormData) => {
-        //     const formattedData = {
-        //       ...data,
-        //       dob: new Date(
-        //         Number.parseInt(data.dobYear),
-        //         months.indexOf(data.dobMonth),
-        //         Number.parseInt(data.dobDay)
-        //       ).toISOString(),
-        //     };
-          
-        //     const res = await fetch('/api/members', {
-        //       method: 'POST',
-        //       headers: { 'Content-Type': 'application/json' },
-        //       body: JSON.stringify(formattedData),
-        //     });
-          
-        //     const result = await res.json();
-          
-        //     if (res.ok) {
-        //       setIsComplete(true);
-        //     } else {
-        //       alert(result.error || 'Something went wrong');
-        //     }
-        //   };
-
-
 
   
       const isStepValid = await trigger(fieldsToValidate as any)
@@ -205,26 +166,6 @@ export default function Membershipform({}: Props) {
   // Watch the date fields to calculate age
   const dobDay = watch("dobDay")
   const dobMonth = watch("dobMonth")
-  const dobYear = watch("dobYear")
-
-  // Calculate age if all date fields are filled
-  const calculateAge = () => {
-    if (dobDay && dobMonth && dobYear) {
-      const birthDate = new Date(Number.parseInt(dobYear), months.indexOf(dobMonth), Number.parseInt(dobDay))
-      const today = new Date()
-      let age = today.getFullYear() - birthDate.getFullYear()
-      const monthDiff = today.getMonth() - birthDate.getMonth()
-
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--
-      }
-
-      return age
-    }
-    return null
-  }
-
-  const age = calculateAge()
 
   
 
@@ -363,7 +304,8 @@ export default function Membershipform({}: Props) {
                             {errors.dobMonth && <p className="text-sm text-red-500">{errors.dobMonth.message}</p>}
                         </div>
                         <div>
-                            <Controller
+                            {/* Controller for dobYear removed */}
+                            {/* <Controller
                             name="dobYear"
                             control={control}
                             render={({ field }) => (
@@ -381,14 +323,9 @@ export default function Membershipform({}: Props) {
                                 </Select>
                             )}
                             />
-                            {errors.dobYear && <p className="text-sm text-red-500">{errors.dobYear.message}</p>}
+                            {errors.dobYear && <p className="text-sm text-red-500">{errors.dobYear.message}</p>} */}
                         </div>
                         </div>
-                        {age !== null && (
-                        <p className="text-sm text-gray-500 mt-1">
-                            Age: {age} years {age < 18 && "(Must be at least 18 years old)"}
-                        </p>
-                        )}
                     </div>
                     </div>
                 )}

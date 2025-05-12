@@ -47,7 +47,7 @@ export default function BoardPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <PageHeader
-        title="Board of Directors"
+        title="Executive Members"
         description="Meet the dedicated individuals who guide our organization's mission and vision."
       />
 

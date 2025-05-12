@@ -335,6 +335,8 @@ export type Database = {
           denied_by: string | null
           denied_on: string | null
           dob: string | null
+          dob_month: string | null
+          dob_year: string | null
           email: string | null
           first_name: string | null
           id: number
@@ -359,6 +361,8 @@ export type Database = {
           denied_by?: string | null
           denied_on?: string | null
           dob?: string | null
+          dob_month?: string | null
+          dob_year?: string | null
           email?: string | null
           first_name?: string | null
           id?: number
@@ -383,6 +387,8 @@ export type Database = {
           denied_by?: string | null
           denied_on?: string | null
           dob?: string | null
+          dob_month?: string | null
+          dob_year?: string | null
           email?: string | null
           first_name?: string | null
           id?: number

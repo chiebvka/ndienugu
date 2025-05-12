@@ -54,7 +54,7 @@
                Home
              </Link>
               <Link href="/board" className="hover:text-accent transition-colors">
-                Board
+                Executives
               </Link>
               <Link href="/about" className="hover:text-accent transition-colors">
                 About
@@ -63,7 +63,7 @@
                Gallery
              </Link>
              <Link href="/blog" className="hover:text-accent transition-colors">
-               News
+               Projects
              </Link>
              <Link href="/members" className="hover:text-accent transition-colors">
                Membership
@@ -106,10 +106,10 @@
  
                      <nav className="flex flex-col space-y-1">
                        <MobileNavLink href="/" label="Home" onClick={() => setIsSheetOpen(false)} />
-                       <MobileNavLink href="/board" label="Board of Directors" onClick={() => setIsSheetOpen(false)} />
+                       <MobileNavLink href="/board" label="Executive Members" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/about" label="About" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/gallery" label="Media Gallery" onClick={() => setIsSheetOpen(false)} />
-                       <MobileNavLink href="/blog" label="News & Press" onClick={() => setIsSheetOpen(false)} />
+                       <MobileNavLink href="/blog" label="Projects & News" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/members" label="Membership" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/events" label="Events" onClick={() => setIsSheetOpen(false)} />
                      </nav>
