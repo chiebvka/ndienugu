@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import type { Tables, TablesInsert } from "@/types/supabase";
 import { z } from "zod";
+import { createAnonClient } from "@/utils/supabase/anon";
+import { createClient as createBasicClient } from '@supabase/supabase-js'; 
 
 type EventRow = Tables<"events">;
 type EventParticipantInsert = TablesInsert<"event_participant">;
@@ -192,7 +194,16 @@ export async function POST(request: NextRequest) {
 
     console.log("[API /api/events] Inserting into event_participant:", participantData);
 
-    const supabase = await createClient();
+    const supabase = createBasicClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!
+      );
+
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    console.log("[DEBUG] Supabase user:", user); // Should be null for anon
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    console.log("[DEBUG] Supabase session:", session)
     const { data, error: insertError } = await supabase
       .from("event_participant")
       .insert(participantData)

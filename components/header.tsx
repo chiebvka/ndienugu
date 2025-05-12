@@ -18,7 +18,7 @@
        <div className="container mx-auto px-4">
          <div className="flex items-center justify-between h-28 w-[85%] mx-auto">
            <Link href="/" className="flex items-center space-x-3">
-             <div className="relative flex h-24 w-32  p-1">
+             <div className="relative flex h-14 w-20 md:h-24 md:w-32  p-1">
 
                <Image
                  src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byzmFyEiIO8nuAjdVXYCmhDBUgEqwfS5evctoI"
