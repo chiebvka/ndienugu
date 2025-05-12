@@ -64,10 +64,11 @@ function mapSupabaseToApiBlogPostDetail(
 }
 
 export async function GET(
-    request: NextRequest,
-    { params }: { params: { slug: string } }
+    req: NextRequest, 
+    context: any
 ) {
-    const slug = params.slug;
+    const { params } = context;
+    const {slug} = params;
     console.log(`[API /api/blog/${slug}] GET request for slug: ${slug}`);
 
     if (!slug) {
