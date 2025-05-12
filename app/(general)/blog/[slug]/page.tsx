@@ -117,29 +117,34 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page({ params }: Props) {
-  if (!params || typeof params.slug !== 'string' || params.slug.trim() === "") {
-    console.error("[Page] Error: Slug is missing, not a string, or empty in params:", params);
+export default async function Page({
+  params, // Keep the type as Promise<{ slug: string }>
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  // Await the promise first to get the actual parameters object
+  const resolvedParams = await params;
+
+  // Now, validate the slug from the resolved object
+  if (!resolvedParams || typeof resolvedParams.slug !== 'string' || resolvedParams.slug.trim() === "") {
+    console.error("[Page] Error: Slug is missing, not a string, or empty in resolved params:", resolvedParams);
     notFound();
-    // TypeScript might not know notFound() exits, so a return can be good practice
-    // depending on linting rules, but notFound() should terminate rendering.
+    // Return null is technically not needed after notFound(), but can satisfy some linters
+    return null;
   }
-  // At this point, params and params.slug are assumed to be valid.
-  // If notFound() was called, this part won't execute.
-  const slug = params.slug; 
+
+  // Use the validated slug
+  const slug = resolvedParams.slug;
   const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();
-     // Similar to above, notFound() should handle it.
+    return null; // As above
   }
 
-  // If post is null here (after notFound() should have been called),
-  // it means notFound() didn't terminate or there's a logic flow issue.
-  // However, with Next.js conventions, notFound() should prevent rendering further.
-  // For type safety with post potentially being null if notFound doesn't immediately stop TS analysis:
-  if (!post) { 
-      return null; // Should be unreachable if notFound() works as expected
+  // For type safety (though should be unreachable if notFound works)
+  if (!post) {
+      return null;
   }
 
   return (
