@@ -53,7 +53,7 @@ async function getPostBySlug(slug: string): Promise<ApiBlogPost | null> {
 }
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 // Generate Metadata
@@ -61,14 +61,19 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  if (!params || typeof params.slug !== 'string' || params.slug.trim() === "") {
-    console.error("[generateMetadata] Error: Slug is missing, not a string, or empty in params:", params);
+  // Await the params promise to get the resolved object
+  const resolvedParams = await params;
+
+  // Now validate the slug from the resolved object
+  if (!resolvedParams || typeof resolvedParams.slug !== 'string' || resolvedParams.slug.trim() === "") {
+    console.error("[generateMetadata] Error: Slug is missing, not a string, or empty in resolved params:", resolvedParams);
     return {
       title: "Post Not Found",
       description: "The requested blog post could not be found or loaded due to an issue with the request.",
     };
   }
-  const slug = params.slug;
+
+  const slug = resolvedParams.slug; // Use slug from the resolved params
   const post = await getPostBySlug(slug);
 
   if (!post) {
@@ -79,8 +84,8 @@ export async function generateMetadata(
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const imageUrl = post.cover_image 
-    ? (post.cover_image.startsWith('http') ? post.cover_image : `${siteUrl}${post.cover_image}`) 
+  const imageUrl = post.cover_image
+    ? (post.cover_image.startsWith('http') ? post.cover_image : `${siteUrl}${post.cover_image}`)
     : `${siteUrl}/default-og-image.png`; // Ensure you have a default OG image
 
   return {
@@ -117,11 +122,7 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page({
-  params, // Keep the type as Promise<{ slug: string }>
-}: {
-  params: Promise<{ slug: string }>
-}) {
+export default async function Page({ params }: Props) {
   // Await the promise first to get the actual parameters object
   const { slug } = await params
 
