@@ -15,10 +15,10 @@
  
    return (
      <header className="bg-gradient-primary z-50 text-white shadow-md">
-       <div className="container mx-auto px-4">
+       <div className=" mx-auto px-4">
          <div className="flex items-center justify-between h-28 w-[85%] mx-auto">
-           <Link href="/" className="flex items-center space-x-3">
-             <div className="relative flex h-14 w-20 md:h-24 md:w-32  p-1">
+           <Link href="/" className="flex md:items-center space-x-3">
+             <div className="relative flex h-14 w-20 md:h-10 md:w-14 lg:h-24 lg:w-32  p-1">
 
                <Image
                  src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byzmFyEiIO8nuAjdVXYCmhDBUgEqwfS5evctoI"
@@ -41,7 +41,7 @@
                  alt="Organization Logo"
                  width={130}
                  height={130}
-                 className="object-cover "
+                 className="object-cover lg:flex md:hidden"
                  priority
                />
              </div>

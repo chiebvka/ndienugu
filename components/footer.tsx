@@ -4,7 +4,7 @@ import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "luc
 export default function Footer() {
   return (
     <footer className="bg-gradient-primary text-white">
-      <div className="container mx-auto px-4 py-12">
+      <div className=" px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4">NdiEnugu Scotland</h3>
@@ -92,7 +92,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/20 mt-12 pt-6 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Organization Name. All rights reserved.</p>
+          <p>Powered  by {new Date().getFullYear()} <Link href="https://bexoni.com" target="_blank" className="hover:text-accent underline transition-colors">Bexoni Labs</Link>. &copy; All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -23,7 +23,7 @@ function setCookie(name: string, value: string, days: number) {
 }
 
 export default function Memeberaccessform({ onAccessGranted }: Props) {
-    const [name, setName] = useState("")
+    const [firstName, setFirstName] = useState("")
     const [email, setEmail] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     // const router = useRouter() // No longer needed here
@@ -31,8 +31,8 @@ export default function Memeberaccessform({ onAccessGranted }: Props) {
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault()
   
-      if (!name.trim() || !email.trim()) {
-        toast.error("Please enter both name and email")
+      if (!firstName.trim() || !email.trim()) {
+        toast.error("Please enter both your first name and email")
         return
       }
   
@@ -44,7 +44,7 @@ export default function Memeberaccessform({ onAccessGranted }: Props) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, email }),
+          body: JSON.stringify({ firstName, email }),
         });
   
         const data = await response.json();
@@ -70,13 +70,13 @@ export default function Memeberaccessform({ onAccessGranted }: Props) {
   return (
         <form onSubmit={handleSubmit} className="space-y-6 w-full">
             <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="firstName">First Name (used during registration)</Label>
                 <Input
-                id="name"
+                id="firstName"
                 type="text"
-                placeholder="Enter your full name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your first name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 required
                 disabled={isLoading}
                 />
