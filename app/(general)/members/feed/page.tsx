@@ -1,3 +1,4 @@
+// NOTE: This is a client component for cookie-based access logic.\n// Next.js metadata cannot be set here.\n// If SEO metadata is needed, set fallback metadata in the parent layout or a static parent page.\n
 "use client"
 
 import React, { useState, useEffect } from 'react';

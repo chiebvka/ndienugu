@@ -1,10 +1,11 @@
+// NOTE: This is a client component for cookie-based redirect logic.\n// Next.js metadata cannot be set here.\n// If SEO metadata is needed, set fallback metadata in the parent layout or a static parent page.\n
 "use client"
 
 import Membershipform from '@/components/membership-form'
 import PageHeader from '@/components/page-header'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
 
 type Props = {}
@@ -25,6 +26,12 @@ function getCookie(name: string): string | null {
 export default function Page({}: Props) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  
+
+  // const memberVerifiedCookie = getCookie("ndienugu_member_verified");
+  // if (memberVerifiedCookie === "true") {
+  //   redirect("/members/feed");
+  // }
 
   useEffect(() => {
     const memberVerifiedCookie = getCookie("ndienugu_member_verified");

@@ -3,9 +3,6 @@ import Features from "@/components/features";
 import Hero from "@/components/hero";
 import Join from "@/components/join";
 import Quote from "@/components/quote";
-import ConnectSupabaseSteps from "@/components/tutorial/connect-supabase-steps";
-import SignUpUserSteps from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 
 export default async function Home() {
   return (
@@ -22,3 +19,26 @@ export default async function Home() {
     </>
   );
 }
+
+export const metadata = {
+  title: "Home | NDI ENUGU SCOTLAND ASSOCIATION",
+  description: "Welcome to Ndi Enugu Scotland Association. Discover our mission, events, projects, and how to join our vibrant community.",
+  openGraph: {
+    title: "Home | NDI ENUGU SCOTLAND ASSOCIATION",
+    description: "Welcome to Ndi Enugu Scotland Association. Discover our mission, events, projects, and how to join our vibrant community.",
+    images: [
+      {
+        url: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byaNmwnIeurKPAgOI4q9yf6jGYEhoxJHTkLC2N",
+        width: 1200,
+        height: 630,
+        alt: "NDI ENUGU SCOTLAND ASSOCIATION Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Home | NDI ENUGU SCOTLAND ASSOCIATION",
+    description: "Welcome to Ndi Enugu Scotland Association. Discover our mission, events, projects, and how to join our vibrant community.",
+    images: ["https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byaNmwnIeurKPAgOI4q9yf6jGYEhoxJHTkLC2N"],
+  },
+};

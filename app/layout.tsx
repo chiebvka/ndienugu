@@ -1,4 +1,3 @@
-
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -12,8 +11,30 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "NDI ENUGU SCOTLAND ASSOCIATION | OGANIHU NDI ENUGU",
+  description: "Ndi Enugu Scotland Association (est. 2022) is a vibrant community of Enugu indigenes in Scotland, fostering unity, culture, and progress. Join us for events, projects, and community support.",
+  openGraph: {
+    title: "NDI ENUGU SCOTLAND ASSOCIATION | OGANIHU NDI ENUGU",
+    description: "Ndi Enugu Scotland Association (est. 2022) is a vibrant community of Enugu indigenes in Scotland, fostering unity, culture, and progress. Join us for events, projects, and community support.",
+    url: defaultUrl,
+    siteName: "Ndi Enugu Scotland Association",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "NDI ENUGU SCOTLAND ASSOCIATION Logo",
+      },
+    ],
+    locale: "en_GB",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NDI ENUGU SCOTLAND ASSOCIATION | OGANIHU NDI ENUGU",
+    description: "Ndi Enugu Scotland Association (est. 2022) is a vibrant community of Enugu indigenes in Scotland, fostering unity, culture, and progress. Join us for events, projects, and community support.",
+    images: ["/opengraph-image.png"],
+  },
 };
 
 const geistSans = Geist({

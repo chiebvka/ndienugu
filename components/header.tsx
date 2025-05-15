@@ -62,14 +62,14 @@
              <Link href="/gallery" className="hover:text-accent transition-colors">
                Gallery
              </Link>
-             <Link href="/blog" className="hover:text-accent transition-colors">
-               Projects
-             </Link>
              <Link href="/members" className="hover:text-accent transition-colors">
                Membership
              </Link>
              <Link href="/events" className="hover:text-accent transition-colors">
                Events
+             </Link>
+             <Link href="/blog" className="hover:text-accent transition-colors">
+               Projects
              </Link>
            </nav>
  

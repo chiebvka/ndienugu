@@ -1,5 +1,3 @@
-"use client"
-
 import type { BoardMember } from "@/types"
 import BoardMemberCard from "@/components/board-member-card"
 import PageHeader from "@/components/page-header"
@@ -38,8 +36,8 @@ const boardMembers: BoardMember[] = [
     id: 5,
     name: "Nnamdi Edeh",
     position: "Provost",
-    bio: "Dr. Taylor specializes in community health initiatives and public policy.",
-    imageUrl: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byI9k0UfYv0RHXMStF2xwJl135UhbEgNGyAKDr?height=300&width=300",
+    bio: "Nnamdi Edeh is a respected engineer, humanitarian, and community leader who currently serves as the Provost of the Ndi Enugu Association. He is widely known for his dedication to grassroots development and transparent governance. Leveraging his engineering background, he supports sustainable infrastructure projects and youth empowerment initiatives. Edeh's humanitarian efforts focus on poverty alleviation, education, and healthcare accessibility. In his role as Provost, he fosters unity and cultural pride among the Enugu diaspora, while promoting inclusive leadership and community-driven development. A strong advocate for good governance, he encourages active civic participation and transparency in leadership. His multifaceted work continues to inspire positive change, accountability, and resilience within society.",
+    imageUrl: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19by5PPKJ9JSPtjYROonfQiEIyVMslgCKcrWvub0?height=300&width=300",
   }
 ]
 
@@ -63,4 +61,27 @@ export default function BoardPage() {
     </div>
   )
 }
+
+export const metadata = {
+  title: "Executive Members | NDI ENUGU SCOTLAND ASSOCIATION",
+  description: "Meet the dedicated executive members guiding Ndi Enugu Scotland Association's mission and vision.",
+  openGraph: {
+    title: "Executive Members | NDI ENUGU SCOTLAND ASSOCIATION",
+    description: "Meet the dedicated executive members guiding Ndi Enugu Scotland Association's mission and vision.",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "NDI ENUGU SCOTLAND ASSOCIATION Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Executive Members | NDI ENUGU SCOTLAND ASSOCIATION",
+    description: "Meet the dedicated executive members guiding Ndi Enugu Scotland Association's mission and vision.",
+    images: ["/opengraph-image.png"],
+  },
+};
 

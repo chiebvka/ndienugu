@@ -1,11 +1,4 @@
 import { notFound } from "next/navigation"
-import Image from "next/image"
-import Link from "next/link"
-import type { BlogPost } from "@/types"
-import ShareButtons from "@/components/share-buttons"
-import { formatDate } from "@/lib/utils"
-import { CalendarDays, Clock, ChevronLeft } from "lucide-react"
-import BlogPostSidebar from "@/components/blog-post-sidebar"
 import { Metadata, ResolvingMetadata } from "next"
 import Slugfeed from "./_components/slug-feed"
 
@@ -79,14 +72,12 @@ export async function generateMetadata(
   if (!post) {
     return {
       title: "Post Not Found",
-      description: `The blog post with slug "${slug}" could not be found.`,
+      description: `The blog post with slug \"${slug}\" could not be found.`,
     };
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const imageUrl = post.cover_image
-    ? (post.cover_image.startsWith('http') ? post.cover_image : `${siteUrl}${post.cover_image}`)
-    : `${siteUrl}/default-og-image.png`; // Ensure you have a default OG image
+  const imageUrl = `https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byaNmwnIeurKPAgOI4q9yf6jGYEhoxJHTkLC2N`;
 
   return {
     title: post.title,
@@ -101,7 +92,7 @@ export async function generateMetadata(
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: post.title,
+          alt: "NDI ENUGU SCOTLAND ASSOCIATION Logo",
         },
       ],
       locale: "en_US",
@@ -114,11 +105,7 @@ export async function generateMetadata(
       title: post.title,
       description: post.excerpt || "Read this interesting blog post.",
       images: [imageUrl],
-      // creator: '@yourTwitterHandle', // Optional: Your Twitter handle
     },
-    // alternates: {
-    //   canonical: `${siteUrl}/blog/${post.slug}`,
-    // },
   };
 }
 
