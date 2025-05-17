@@ -125,7 +125,7 @@ import { Button } from "./ui/button"
              </SheetContent>
            </Sheet>
          </div>
-         <Button className="bg-bexoni hidden md:flex" asChild>
+         <Button className="bg-bexoni rounded-full hidden md:flex" asChild>
             <Link href="/donation">Donate</Link>
           </Button>
        </div>
