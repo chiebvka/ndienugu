@@ -115,6 +115,8 @@ import { Button } from "./ui/button"
                        <MobileNavLink href="/blog" label="Projects & News" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/members" label="Membership" onClick={() => setIsSheetOpen(false)} />
                        <MobileNavLink href="/events" label="Events" onClick={() => setIsSheetOpen(false)} />
+                       <MobileNavLink href="/donation" label="Donate" onClick={() => setIsSheetOpen(false)} />
+
                      </nav>
                    </div>
                  </div>
