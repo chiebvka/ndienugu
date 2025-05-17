@@ -8,7 +8,7 @@ const boardMembers: BoardMember[] = [
     id: 1,
     name: "Frank Anozie",
     position: "Chairman",
-    bio: "Frank Anozie has over 20 years of experience in community development and organizational leadership.",
+    bio: "Engr Frank Anozie CEng MIET, FS Eng. As the pioneer Chairman of the Association, Frank plays a pivotal role in guiding the group’s mission to serve and uplift the community. An engineer by profession, Frank brings a strong background in problem-solving, project and safety management, and innovation to the role. With over 22 years of professional experience in the engineering field and functional safety, he applies technical expertise and a strategic mindset to community initiatives, fostering growth, sustainability, and collaboration towards undertaking charitable projects. Under Frank leadership, Ndi Enugu Association has launched several impactful projects aimed at improving Ndi Enugu culture and members social welfare. Frank is committed to creating positive change and empowering others through inclusive and forward-thinking leadership.",
     imageUrl: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byt41x6vYAYGMZhqz53JlC0TvO7obQiruE6Afj?height=300&width=300",
   },
   {
@@ -29,7 +29,7 @@ const boardMembers: BoardMember[] = [
     id: 4,
     name: "Romanus Eze",
     position: "Secretary",
-    bio: "Romanus Eze has extensive experience in financial management and corporate governance.",
+    bio: "Romanus Eze, CEng, MSaRS, FS Eng, is a director and lead consultant at RICCO Engineering Consulting and Management UK Ltd Romanus Eze is a Chartered Engineer with the UK Engineering Council and an accomplished leader in the fields of Process Safety and Technical Safety Engineering. As the Director and Lead Consultant at RICCO Engineering Consulting and Management UK Ltd, he brings decades of technical expertise and strategic insight to diverse sectors including Oil & Gas, Real Estate Development, and Film Industry Investment. Recognised as a subject matter expert and Major Accident Hazard Risk Champion, Romanus has provided specialist consultancy services to several world-class organisations globally. His work ensures safety integrity, risk mitigation, and regulatory compliance across large-scale industrial operations. Romanus is the current secretary of the NESA, where he plays a key role in fostering leadership and cultural engagement through active community initiatives and the timeless wisdom of Igbo proverbs.",
     imageUrl: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19bycBpMzoTLp7NMbw0sOJUx6CKTmSXByEAgqYRH?height=300&width=300",
   },
   {

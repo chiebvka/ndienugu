@@ -7,6 +7,7 @@
  import Image from "next/image"
  import { Menu } from "lucide-react"
  import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Button } from "./ui/button"
 
  
  export default function Header() {
@@ -15,7 +16,7 @@
  
    return (
      <header className="bg-gradient-primary z-50 text-white shadow-md">
-       <div className=" mx-auto px-4">
+       <div className=" mx-auto flex items-center px-4">
          <div className="flex items-center justify-between h-28 w-[85%] mx-auto">
            <Link href="/" className="flex md:items-center space-x-3">
              <div className="relative flex h-14 w-20 md:h-10 md:w-14 lg:h-24 lg:w-32  p-1">
@@ -72,6 +73,8 @@
                Projects
              </Link>
            </nav>
+
+           {/* <Button className="bg-bexoni">Donate</Button> */}
  
            {/* Mobile Navigation with Sheet */}
            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -120,6 +123,9 @@
              </SheetContent>
            </Sheet>
          </div>
+         <Button className="bg-bexoni hidden md:flex" asChild>
+            <Link href="/donation">Donate</Link>
+          </Button>
        </div>
  
        {/* Desktop Search Bar */}
