@@ -52,12 +52,17 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/blog" className="hover:text-accent transition-colors">
-                  Press Releases
+                  Projects & Initiatives
                 </Link>
               </li>
               <li>
                 <Link href="/events" className="hover:text-accent transition-colors">
                   Events
+                </Link>
+              </li>
+              <li>
+                <Link href="/donation" className="hover:text-accent transition-colors">
+                  Donate
                 </Link>
               </li>
             </ul>
