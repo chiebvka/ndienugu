@@ -11,7 +11,7 @@ export default function Hero() {
 
   const slides = [
     {
-      title: "Welcome to Ndi Enugu Scotland Association",
+      title: "Welcome to Ndi Enugu Scotland Association (NESA)",
       description: "The Ndi Enugu Scotland Association (NESA) is a distinguished community of Ndi Enugu residing in Scotland, dedicated to fostering unity, cultural heritage, and progressive development both within their Scottish diaspora and their homeland in Enugu",
       image: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byVZvOUtPEsYNLv4rwhS0WaH9XVRZjOkIA3CBg?height=800&width=1600",
       cta: "Upcoming Events",
