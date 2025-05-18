@@ -42,7 +42,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/board" className="hover:text-accent transition-colors">
-                  Board of Directors
+                  Executives
                 </Link>
               </li>
               <li>

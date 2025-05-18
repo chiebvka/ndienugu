@@ -15,14 +15,14 @@ const boardMembers: BoardMember[] = [
     id: 2,
     name: "Uche Okwu",
     position: " Financial Secretary",
-    bio: "Uche Okwu is an expert in sustainable development with numerous publications in the field.",
+    bio: "Uche Okwu is an experienced investment manager based in Aberdeen, where he lives with his spouse and two children. With a steady, thoughtful approach to finance, he has built a reputation for guiding clients through complex markets with clarity and care. Balancing a demanding career with a strong commitment to family life, he brings both discipline and empathy to his work. Known for prioritizing long-term value and responsible investing, he focuses on strategies that support sustainable growth—for clients and communities alike. Beyond his professional role, Uche is deeply engaged in community and cultural life. He actively supports local initiatives that promote inclusion, education, and cross-cultural understanding. Whether mentoring young professionals, contributing to local forums, or participating in cultural events, he brings a spirit of service and collaboration to everything he does. He is also a quiet advocate for financial literacy, particularly among underserved groups, and enjoys contributing to programs that empower others to take control of their financial futures. Grounded, reliable, and driven by purpose, Uche continues to build a meaningful career shaped by trust, thoughtful leadership, and a commitment to the wider community.",
     imageUrl: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19by7ojzeSfmbqWtgRVMUz3u1YEin6B08TsrwLCP?height=300&width=300",
   },
   {
     id: 3,
     name: "Chukwudi Orji",
     position: "Treasurer",
-    bio: "Chukwudi Orji brings valuable administrative expertise from her years in public service.",
+    bio: "Chukwudi Orji  BSc Nig, MSc Lagos, MA London, MSc Aberdeen. I am s determined, open and dedicated person who always desire to achieve and excel. I work well independently and play active role in a team, able to lead when required. Communicate effectively with people of all ages and backgrounds, work collaboratively to resolve problems and motivate team members to achieve personal and organisational objectives. I have experience in finance, criminal justice, children and family, homelessness and health. I always employ high interpersonal, liaison, analytical and decision-making skills to multiple functions and continuously seek self development and opportunities to apply knowledge and experience to practice. Born in Kano From Enugu State Residents in Scotland Married with children",
     imageUrl: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19by8uLzCP402LKQ3PMoVdSlRqXk67eCJit4HF9B?height=300&width=300",
   },
   {
