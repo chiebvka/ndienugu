@@ -5,6 +5,13 @@ export interface BoardMember {
   bio: string
   imageUrl: string
 }
+export interface PatronMember {
+  id: number
+  name: string
+  bio: string
+  date: string
+  imageUrl: string
+}
 
 export interface GalleryItem {
   id: number

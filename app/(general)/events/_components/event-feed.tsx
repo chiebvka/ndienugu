@@ -1,12 +1,12 @@
 "use client"
 
-
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import EventCard from "@/components/event-card";
 import { Button } from "@/components/ui/button";
 import type { Tables } from "@/types/supabase";
 import { toast } from "sonner";
+import { useSearchParams } from 'next/navigation';
 
 type Props = {}
 
@@ -18,6 +18,19 @@ export default function Eventfeed({}: Props) {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const LIMIT = 5;
+    const searchParams = useSearchParams();
+    const [eventToOpen, setEventToOpen] = useState<string | null>(null);
+  
+    useEffect(() => {
+      const eventIdFromQuery = searchParams.get('openEvent');
+      if (eventIdFromQuery) {
+        setEventToOpen(eventIdFromQuery);
+        const element = document.getElementById(`event-${eventIdFromQuery}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }, [searchParams]);
   
     const fetchEvents = useCallback(async (pageNum: number, reset = false) => {
       if (isLoading) return;
@@ -39,9 +52,22 @@ export default function Eventfeed({}: Props) {
           return;
         }
   
-        setEvents((prevEvents) => (reset ? newEvents : [...prevEvents, ...newEvents]));
+        const updatedEvents = reset ? newEvents : [...events, ...newEvents];
+        setEvents(updatedEvents);
         setHasMore(pageNum * LIMIT < total);
         setPage(pageNum);
+
+        if (eventToOpen) {
+            const foundEvent = updatedEvents.find(e => e.id === eventToOpen);
+            if (foundEvent) {
+                setTimeout(() => {
+                    const element = document.getElementById(`event-${eventToOpen}`);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 0);
+            }
+        }
   
       } catch (error: any) {
         console.error("EventsPage: Error fetching events:", error);
@@ -56,12 +82,12 @@ export default function Eventfeed({}: Props) {
         setIsLoading(false);
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isLoading, LIMIT, events]); // Include 'events' if used in setEvents for concatenation
+    }, [isLoading, LIMIT, events, eventToOpen]);
   
     useEffect(() => {
-      fetchEvents(1, true); // Fetch initial page of events
+      fetchEvents(1, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // fetchEvents is memoized
+    }, []);
   
     const handleViewMore = () => {
       if (!isLoading && hasMore) {
@@ -127,7 +153,11 @@ export default function Eventfeed({}: Props) {
         ) : (
         <div className="space-y-8 mt-12">
             {events.map((eventData) => (
-            <EventCard key={eventData.id} event={mapSupabaseEventToCardProps(eventData)} />
+            <EventCard 
+                key={eventData.id} 
+                event={mapSupabaseEventToCardProps(eventData)}
+                autoOpen={eventData.id === eventToOpen}
+            />
             ))}
         </div>
         )}

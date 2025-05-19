@@ -3,8 +3,10 @@ import Image from "next/image"
 // or you should update the global 'Event' type in '@/types'
 // import type { Event } from "@/types" 
 import { formatDate } from "@/lib/utils"
-import { Calendar, Clock, MapPin } from "lucide-react"
+import { Calendar, Clock, MapPin, Share2 } from "lucide-react"
 import RegistrationFormThree from "./registration-form-three"
+import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
 
 // Define the shape of the event prop that EventCard now expects,
 // aligning with what mapSupabaseEventToCardProps provides.
@@ -23,9 +25,26 @@ interface DisplayEvent {
 
 interface EventCardProps {
   event: DisplayEvent; // Use the DisplayEvent interface
+  autoOpen?: boolean; // Added autoOpen prop
 }
 
-export default function EventCard({ event }: EventCardProps) {
+export default function EventCard({ event, autoOpen = false }: EventCardProps) {
+  const handleShare = () => {
+    if (typeof window !== "undefined") {
+      const shareUrl = `${window.location.origin}/events?openEvent=${event.id}#event-${event.id}`;
+      navigator.clipboard.writeText(shareUrl)
+        .then(() => {
+          toast.success("Event link copied to clipboard!");
+        })
+        .catch(err => {
+          console.error("Failed to copy link: ", err);
+          toast.error("Failed to copy link.");
+        });
+    } else {
+      toast.error("Cannot share event at this time.");
+    }
+  };
+
   return (
     <div id={`event-${event.id}`} className="bg-white rounded-lg border border-rounded border-enugu shadow-md overflow-hidden">
       <div className="md:flex">
@@ -34,7 +53,7 @@ export default function EventCard({ event }: EventCardProps) {
         </div>
         <div className="p-6 md:w-2/3 flex flex-col justify-between">
           <div>
-            <h3 className="text-2xl font-bold mb-2">{event.title}</h3>
+            <h3 className="md:text-2xl text-lg font-bold mb-2">{event.title}</h3>
 
             <div className="flex flex-col space-y-2 mb-4">
               <div className="flex items-center text-gray-600">
@@ -51,14 +70,14 @@ export default function EventCard({ event }: EventCardProps) {
               </div>
             </div>
 
-            <p className="text-gray-700 mb-6">{event.description}</p>
+            <p className="text-gray-700 text-sm md:text-base mb-6">{event.description}</p>
 
             {event.requirements && event.requirements.length > 0 && (
               <div className="mb-6">
-                <h4 className="font-semibold mb-2">Requirements:</h4>
-                <ul className="list-disc pl-5 space-y-1">
+                <h4 className="font-semibold mb-2">Details:</h4>
+                <ul className="space-y-1">
                   {event.requirements.map((requirement, index) => (
-                    <li key={index} className="text-gray-700">
+                    <li key={index} className="text-gray-700 text-sm md:text-base">
                       {requirement}
                     </li>
                   ))}
@@ -67,14 +86,19 @@ export default function EventCard({ event }: EventCardProps) {
             )}
           </div>
 
-          <div className="mt-auto pt-4">
+          <div className="mt-auto pt-4 flex items-center space-x-3">
             <RegistrationFormThree 
               eventId={event.id} 
               eventTitle={event.title}
               eventDate={formatDate(event.date)}
               eventTime={event.time}
               eventLocation={event.location}
+              autoOpen={autoOpen}
             />
+            <Button  onClick={handleShare} aria-label="Share event" className="bg-green-100 text-enugu hover:bg-green-200  flex items-center">
+              <Share2 className="h-4 w-4 md:mr-2" />
+              <span className="hidden md:inline">Share Event Link</span>
+            </Button>
           </div>
         </div>
       </div>

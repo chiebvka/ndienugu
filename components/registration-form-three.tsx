@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"; // For submitting data
 import { X, Plus, Calendar, MapPin, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ import { toast } from "sonner";
 
 type Guest = {
   id: number
+  name: string
   age: string
   sex: string
 }
@@ -24,6 +25,7 @@ interface RegistrationFormThreeProps {
   eventDate?: string;
   eventTime?: string;
   eventLocation?: string;
+  autoOpen?: boolean;
 }
 
 export default function RegistrationFormThree({ 
@@ -31,27 +33,32 @@ export default function RegistrationFormThree({
   eventTitle,
   eventDate,
   eventTime,
-  eventLocation 
+  eventLocation,
+  autoOpen = false
 }: RegistrationFormThreeProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(autoOpen);
+  const [registrantName, setRegistrantName] = useState("")
+  const [registrantEmail, setRegistrantEmail] = useState("")
   const [registrantAge, setRegistrantAge] = useState("")
   const [registrantSex, setRegistrantSex] = useState("")
   const [guests, setGuests] = useState<Guest[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const addGuest = () => {
-    setGuests([...guests, { id: Date.now(), age: "", sex: "" }])
+    setGuests([...guests, { id: Date.now(), name: "", age: "", sex: "" }])
   }
 
   const removeGuest = (id: number) => {
     setGuests(guests.filter((guest) => guest.id !== id))
   }
 
-  const updateGuest = (id: number, field: "age" | "sex", value: string) => {
+  const updateGuest = (id: number, field: "name" | "age" | "sex", value: string) => {
     setGuests(guests.map((guest) => (guest.id === id ? { ...guest, [field]: value } : guest)))
   }
 
   const resetForm = () => {
+    setRegistrantName("");
+    setRegistrantEmail("");
     setRegistrantAge("");
     setRegistrantSex("");
     setGuests([]);
@@ -61,13 +68,38 @@ export default function RegistrationFormThree({
     e.preventDefault()
     setIsSubmitting(true);
 
+    if (!registrantName.trim()) {
+      toast.error("Please enter your name.");
+      setIsSubmitting(false);
+      return;
+    }
+    if (!registrantEmail.trim() || !/\S+@\S+\.\S+/.test(registrantEmail)) {
+        toast.error("Please enter a valid email address.");
+        setIsSubmitting(false);
+        return;
+    }
+    for (const guest of guests) {
+        if(!guest.name.trim()){
+            toast.error(`Please enter a name for Guest ${guests.indexOf(guest) + 1}.`);
+            setIsSubmitting(false);
+            return;
+        }
+    }
+
     const registrationData = {
       eventId,
       registrant: {
+        name: registrantName,
+        email: registrantEmail,
         age: registrantAge,
         sex: registrantSex,
       },
-      additionalGuests: guests,
+      additionalGuests: guests.map(g => ({
+        id: g.id,
+        name: g.name,
+        age: g.age,
+        sex: g.sex,
+      })),
     }
 
     console.log("Submitting registration data:", registrationData);
@@ -76,8 +108,8 @@ export default function RegistrationFormThree({
       const response = await axios.post("/api/events", registrationData);
       console.log("Registration successful:", response.data);
       toast.success(response.data.message || "Registration interest submitted successfully!");
-      setOpen(false); // Close sheet on success
-      resetForm(); // Reset form fields
+      setOpen(false);
+      resetForm();
     } catch (error: any) {
       console.error("Registration failed:", error);
       if (error.response) {
@@ -92,13 +124,17 @@ export default function RegistrationFormThree({
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} className="bg-enugu text-white hover:bg-enugu/90">
+      <Button onClick={() => {
+        setOpen(true);
+      }} className="bg-enugu text-white hover:bg-enugu/90">
         Register Now
       </Button>
 
       <Sheet open={open} onOpenChange={(isOpen) => {
         setOpen(isOpen);
-        if (!isOpen) resetForm(); // Reset form if sheet is closed without submitting
+        if (!isOpen) {
+          resetForm();
+        }
       }}>
         <SheetContent className="sm:max-w-lg w-[90vw] overflow-y-auto"> {/* Adjusted width */}
           <SheetHeader className="mb-4">
@@ -128,6 +164,32 @@ export default function RegistrationFormThree({
           <form onSubmit={handleSubmit} className="space-y-6 pb-16"> {/* Added padding-bottom for footer */}
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Your Information</h3>
+              <div>
+                <Label htmlFor="registrantName">Name</Label>
+                <Input
+                  id="registrantName"
+                  type="text"
+                  value={registrantName}
+                  onChange={(e) => setRegistrantName(e.target.value)}
+                  required
+                  className="mt-1"
+                  placeholder="Your Full Name"
+                  disabled={isSubmitting}
+                />
+              </div>
+              <div>
+                <Label htmlFor="registrantEmail">Email</Label>
+                <Input
+                  id="registrantEmail"
+                  type="email"
+                  value={registrantEmail}
+                  onChange={(e) => setRegistrantEmail(e.target.value)}
+                  required
+                  className="mt-1"
+                  placeholder="your.email@example.com"
+                  disabled={isSubmitting}
+                />
+              </div>
               <div>
                 <Label htmlFor="registrantAge">Age</Label>
                 <Input
@@ -190,6 +252,19 @@ export default function RegistrationFormThree({
                     </Button>
                   </div>
                   <div>
+                    <Label htmlFor={`guest-name-${guest.id}`}>Name</Label>
+                    <Input
+                      id={`guest-name-${guest.id}`}
+                      type="text"
+                      value={guest.name}
+                      onChange={(e) => updateGuest(guest.id, "name", e.target.value)}
+                      required
+                      className="mt-1"
+                      placeholder="Guest's Full Name"
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  <div>
                     <Label htmlFor={`guest-age-${guest.id}`}>Age</Label>
                     <Input
                       id={`guest-age-${guest.id}`}
@@ -241,4 +316,4 @@ export default function RegistrationFormThree({
       </Sheet>
     </>
   )
-} 
+}
