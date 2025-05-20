@@ -226,7 +226,7 @@ export default function Donatefeed({}: Props) {
               </CardFooter>
             </Card>
 
-            <div className="mt-8 bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
+            {/* <div className="mt-8 bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
               <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +251,7 @@ export default function Donatefeed({}: Props) {
                 means we can claim an extra 25p for every £1 you donate at no cost to you. Please contact us for a Gift
                 Aid declaration form.
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
