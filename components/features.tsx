@@ -73,7 +73,7 @@ const features = [
             </div>
             <img
               alt="Product screenshot"
-              src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byOm2c1U7A4pmNMSgrf1zCxRLTQlU20qGHjVJX"
+              src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19bywUttbqg4i7gHpe5EM8GhvjwTBFfCqUks6ZLn"
               width={2432}
               height={1442}
               className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
