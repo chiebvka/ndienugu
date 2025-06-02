@@ -3,7 +3,8 @@ import "./globals.css";
 import { Providers } from "./providers";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner";
+import PrivacyModalTrigger from "@/components/privacy-modal-trigger";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -59,6 +60,7 @@ export default function RootLayout({
               <Footer />
             </div>
             <Toaster richColors />
+            <PrivacyModalTrigger />
         </Providers>
       </body>
     </html>
