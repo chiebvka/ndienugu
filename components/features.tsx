@@ -76,7 +76,7 @@ const features = [
               src="https://zuelvssw8o.ufs.sh/f/u9RlmOBa19bywUttbqg4i7gHpe5EM8GhvjwTBFfCqUks6ZLn"
               width={2432}
               height={1442}
-              className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
+              className="w-full rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] sm:max-w-none md:-ml-4 lg:-ml-0"
             />
           </div>
         </div>

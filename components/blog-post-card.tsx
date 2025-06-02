@@ -45,7 +45,7 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
           <Link href={`/blog/${post.slug}`}>{post.title}</Link>
         </h3>
         {post.excerpt && (
-            <p className="text-muted-foreground text-sm mb-4 flex-1 line-clamp-3">{post.excerpt}</p>
+            <div className="text-muted-foreground text-sm mb-4 flex-1 line-clamp-3" dangerouslySetInnerHTML={{ __html: post.excerpt }} />
         )}
 
         {post.tags && post.tags.length > 0 && (

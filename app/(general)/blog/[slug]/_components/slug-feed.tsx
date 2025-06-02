@@ -8,6 +8,7 @@ import { formatDate } from "@/lib/utils"
 import { CalendarDays, Clock, ChevronLeft } from "lucide-react"
 import { Badge } from '@/components/ui/badge';
 import { ProseTiptap } from '@/components/prose-tiptap';
+import { baseUrl } from "@/utils/universal";
 
 
 // Define the expected prop type based on the API response
@@ -63,6 +64,7 @@ export default function Slugfeed({ post }: SlugfeedProps) {
   };
 
   const readTime = post.readTime || calculateReadTime(post.content);
+  const fullPostUrl = `${baseUrl}/blog/${post.slug}`;
 
   return (
     <div>
@@ -132,7 +134,7 @@ export default function Slugfeed({ post }: SlugfeedProps) {
 
             <div className="border-t pt-8 mt-10 sm:mt-12">
               <h3 className="text-lg sm:text-xl font-semibold mb-4 text-center sm:text-left">Share this article</h3>
-              <ShareButtons title={post.title} url={typeof window !== 'undefined' ? window.location.href : `/blog/${post.slug}`} />
+              <ShareButtons title={post.title} url={fullPostUrl} />
             </div>
           </div>
         </div>

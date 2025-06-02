@@ -1,6 +1,7 @@
 "use client"
 
 import { Facebook, Twitter, Linkedin, Mail, LinkIcon } from "lucide-react"
+import { toast } from "sonner"
 
 interface ShareButtonsProps {
   title: string
@@ -39,7 +40,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(currentUrl)
-    alert("Link copied to clipboard!")
+    toast.success("Link copied to clipboard!")
   }
 
   return (

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { Metadata, ResolvingMetadata } from "next"
 import Slugfeed from "./_components/slug-feed"
+import { baseUrl } from "../../../../utils/universal"
 
 // This would typically come from a database or CMS
 interface ApiTag {
@@ -23,7 +24,6 @@ interface ApiBlogPost {
 // Helper function to fetch post data (can be in a separate lib file)
 async function getPostBySlug(slug: string): Promise<ApiBlogPost | null> {
     // In a real app, you'd use your deployed URL or an environment variable
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
     console.log(`[getPostBySlug] Fetching post with slug: ${slug} from ${baseUrl}/api/blog/${slug}`);
     try {
         const res = await fetch(`${baseUrl}/api/blog/${slug}`, { next: { revalidate: 60 } }); // Revalidate every 60s
@@ -76,7 +76,6 @@ export async function generateMetadata(
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const imageUrl = `https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byaNmwnIeurKPAgOI4q9yf6jGYEhoxJHTkLC2N`;
 
   return {
@@ -85,7 +84,7 @@ export async function generateMetadata(
     openGraph: {
       title: post.title,
       description: post.excerpt || "Read this interesting blog post.",
-      url: `${siteUrl}/blog/${post.slug}`,
+      url: `${baseUrl}/blog/${post.slug}`,
       siteName: "Ndi Enugu Scotland", // Replace with your site name
       images: [
         {
