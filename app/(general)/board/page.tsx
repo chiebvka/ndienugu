@@ -46,7 +46,7 @@ const patronMembers: PatronMember[] = [
   {
     id: 1,
     name: "Engr. Prince Lawrence Ozoemene Ezeh FNSE, Ph.D",
-    date: "2022",
+    date: "2025",
     bio: "Prince Lawrence is a distinguished engineer, politician, and philanthropist from Mburubu in Enugu State, Nigeria. He is the son of HRH Igwe Emmanuel Ogbuzulu Ezeh, the Ozulumba I of Mburubu Kingdom. Prince Ezeh is married to Princess Lina Onyekachi Ezeh and is a proud father of triplets. He holds a Bachelor’s degree in Marine Engineering from Rivers State University of Science and Technology, and both a Master’s and Ph.D. in Engineering Management from Enugu State University of Science and Technology (ESUT). Prince Ezeh has served in various leadership roles in both the public and private sectors. He was a Federal Board Member of the Federal Medical Centre, Nguru, and has chaired several companies including Buzuzu Group, Promat Coating, Lexicon Engineering, and Lisbon Oil & Gas. He is the former Commissioner for Lands and Urban Development and currently serves as the Enugu State Commissioner for Innovation, Science, and Technology. He is a Fellow of the Nigerian Society of Engineers and a member of COREN, IMCA, RCCG, PDP, and the Chattered Fellowship of United Nations Mayors of Peace Known for his deep commitment to community development, Prince Ezeh has provided jobs, electrified communities, rebuilt key infrastructure, and supports over 100 students through his scholarship program. His work reflects a strong dedication to service, innovation, and empowering others.",
     imageUrl: "https://zuelvssw8o.ufs.sh/f/u9RlmOBa19byi2fYRxDXGrR6fTn5ugK8PFl7VsxQJhy4AWBj?height=300&width=300",
   }
