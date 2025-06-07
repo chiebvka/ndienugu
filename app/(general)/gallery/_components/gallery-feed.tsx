@@ -4,8 +4,8 @@ import React, { useReducer, useMemo, useCallback, useState, useEffect } from 're
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
-import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import { Dialog, DialogContent, DialogClose, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import Image from "next/image";
 import { Calendar, X, ChevronLeft, ChevronRight, Loader2, Image as ImageIconLucide, Video as VideoIconLucide, Tag } from "lucide-react";
 import { useMobile } from "@/hooks/use-mobile";
@@ -213,42 +213,82 @@ export default function Galleryfeed({}: Props) {
 
 
   // --- Gallery Card Component ---
-  const GalleryCard = useCallback(({ item }: { item: ApiGalleryItem }) => (
-    <div
-      className="relative group overflow-hidden rounded-lg bg-card shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col"
-      onClick={() => openImageLightbox(item)}
-    >
-      <div className="relative w-full aspect-[4/3]">
-          <Image
-          src={item.coverImageUrl || item.galleryImages?.[0]?.image_url || "/placeholder.svg"}
-            alt={item.title}
-            fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-        <div className="absolute top-2 right-2 bg-black/50 text-white p-1.5 rounded-full">
-            {item.mediaType === "video" ? <VideoIconLucide className="h-4 w-4" /> : <ImageIconLucide className="h-4 w-4" />}
-        </div>
+  const GalleryCard = useCallback(({ item }: { item: ApiGalleryItem }) => {
+    const isVideo = item.mediaType === 'video';
+    const thumbnailUrl = item.coverImageUrl || (!isVideo ? item.galleryImages?.[0]?.image_url : null);
+
+    return (
+      <div
+        className="relative group overflow-hidden rounded-lg bg-card shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col"
+        onClick={() => openImageLightbox(item)}
+      >
+        <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-400">
+          {isVideo ? (
+            thumbnailUrl ? (
+              <>
+                <img
+                  src={thumbnailUrl}
+                  alt=""
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                  draggable={false}
+                />
+                {/* Play overlay */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                    <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)" />
+                    <polygon points="26,20 48,32 26,44" fill="#fff" />
+                  </svg>
+                </div>
+              </>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-300 to-gray-400">
+                <div className="flex flex-col items-center">
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                    <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.2)" />
+                    <polygon points="26,20 48,32 26,44" fill="#fff" />
+                  </svg>
+                  <span className="mt-2 text-gray-600 font-medium text-sm">Video</span>
+                </div>
+              </div>
+            )
+          ) : thumbnailUrl ? (
+            <img
+              src={thumbnailUrl}
+              alt={item.title}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+              draggable={false}
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-400">
+              <ImageIconLucide className="h-12 w-12 text-muted-foreground" />
+            </div>
+          )}
+          <div className="absolute top-2 right-2 bg-black/50 text-white p-1.5 rounded-full">
+            {isVideo ? <VideoIconLucide className="h-4 w-4" /> : <ImageIconLucide className="h-4 w-4" />}
           </div>
-      <div className="p-3 sm:p-4 flex-grow">
-        <h3 className="text-base sm:text-lg font-semibold truncate text-card-foreground mb-1">{item.title}</h3>
-        {item.description && (
+        </div>
+        <div className="p-3 sm:p-4 flex-grow">
+          <h3 className="text-base sm:text-lg font-semibold truncate text-card-foreground mb-1">{item.title}</h3>
+          {item.description && (
             <p className="text-xs text-muted-foreground line-clamp-1 mb-1">{item.description}</p>
-        )}
-        <p className="text-xs sm:text-sm text-muted-foreground mb-1">{new Date(item.date).toLocaleDateString()}</p>
-        <p className="text-xs text-muted-foreground capitalize line-clamp-1">Category: {item.category}</p>
-         {item.tags && item.tags.length > 0 && (
+          )}
+          <p className="text-xs sm:text-sm text-muted-foreground mb-1">{new Date(item.date).toLocaleDateString()}</p>
+          <p className="text-xs text-muted-foreground capitalize line-clamp-1">Category: {item.category}</p>
+          {item.tags && item.tags.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1">
-                {item.tags.slice(0, 2).map(tag => (
-                    <Badge key={tag.id} variant="secondary" className="text-xs bg-green-100 text-green-700 border-green-200 hover:bg-green-200">
-                        {tag.name}
-                    </Badge>
+              {item.tags.slice(0, 2).map(tag => (
+                <Badge key={tag.id} variant="secondary" className="text-xs bg-green-100 text-green-700 border-green-200 hover:bg-green-200">
+                  {tag.name}
+                </Badge>
               ))}
             </div>
           )}
         </div>
       </div>
-  ), [openImageLightbox]);
+    );
+  }, [openImageLightbox]);
   // --- End Gallery Card ---
 
   // --- Lightbox/Drawer Content for Multiple Images ---
@@ -256,36 +296,54 @@ export default function Galleryfeed({}: Props) {
     if (!selectedItemForLightbox) return null;
 
     const currentImage = selectedItemForLightbox.galleryImages?.[lightboxImageIndex];
+    const isVideo = selectedItemForLightbox.mediaType === 'video';
+    const videoUrl = isVideo ? selectedItemForLightbox.galleryImages?.[0]?.image_url : null;
     
         return (
           <>
         {isMobile ? (
             <DrawerHeader className="text-left pt-4 pb-2">
                 <DrawerTitle className="text-lg font-semibold">{selectedItemForLightbox.title}</DrawerTitle>
+                <DrawerDescription className="sr-only">{selectedItemForLightbox.description || 'Gallery item detail'}</DrawerDescription>
             </DrawerHeader>
         ) : (
-            <DialogTitle className="sr-only">{selectedItemForLightbox.title}</DialogTitle>
+            <>
+              <DialogTitle className="sr-only">{selectedItemForLightbox.title}</DialogTitle>
+              <DialogDescription className="sr-only">{selectedItemForLightbox.description || "Gallery item details"}</DialogDescription>
+            </>
         )}
 
         <div className="relative flex-grow flex flex-col overflow-hidden">
             <div className="relative w-full aspect-video bg-black/90 flex items-center justify-center overflow-hidden">
-                {selectedItemForLightbox.galleryImages && selectedItemForLightbox.galleryImages.length > 0 && currentImage ? (
-                  <Image
+                {isVideo && videoUrl ? (
+                  <video
+                      key={selectedItemForLightbox.id}
+                      src={videoUrl}
+                      controls
+                      autoPlay
+                      muted
+                      playsInline
+                      className="w-full h-full object-contain"
+                  >
+                      Your browser does not support the video tag.
+                  </video>
+                ) : !isVideo && currentImage ? (
+                  <img
                         key={currentImage.id}
                         src={currentImage.image_url}
                         alt={currentImage.alt_text || selectedItemForLightbox.title}
-                    fill
+                    
                     className="object-contain"
                   />
                 ) : (
                     <div className="text-white flex flex-col items-center justify-center h-full">
-                        {selectedItemForLightbox.mediaType === 'video' ? <VideoIconLucide className="h-16 w-16 mb-2" /> : <ImageIconLucide className="h-16 w-16 mb-2" />}
-                        <span>{selectedItemForLightbox.galleryImages?.length === 0 ? "No preview images for this item." : "Image not available"}</span>
+                        {isVideo ? <VideoIconLucide className="h-16 w-16 mb-2" /> : <ImageIconLucide className="h-16 w-16 mb-2" />}
+                        <span>{isVideo ? "Video not available." : (selectedItemForLightbox.galleryImages?.length === 0 ? "No preview images for this item." : "Image not available")}</span>
                     </div>
                 )}
               </div>
     
-            {selectedItemForLightbox.galleryImages && selectedItemForLightbox.galleryImages.length > 1 && (
+            {!isVideo && selectedItemForLightbox.galleryImages && selectedItemForLightbox.galleryImages.length > 1 && (
                 <>
               <Button
                 variant="ghost"
