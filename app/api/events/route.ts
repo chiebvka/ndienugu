@@ -19,7 +19,7 @@ const MAX_SUBMISSIONS_PER_WINDOW = 5; // Max 5 registration attempts per IP per 
 const guestSchema = z.object({
   id: z.number(), // Client-side ID for list management
   name: z.string().min(1, "Guest name is required"),
-  age: z.string().min(1, "Age is required for guest").regex(/^\d+$/, "Age must be a number"),
+  age: z.enum(["1-12", "13-17", "18+"], { required_error: "Age range is required for guest" }),
   sex: z.enum(["male", "female", ""]),
 });
 
@@ -28,7 +28,7 @@ const registrationSchema = z.object({
   registrant: z.object({
     name: z.string().min(1, "Registrant name is required"),
     email: z.string().email("Invalid email format"),
-    age: z.string().min(1, "Registrant age is required").regex(/^\d+$/, "Age must be a number"),
+    age: z.enum(["1-12", "13-17", "18+"], { required_error: "Registrant age range is required" }),
     sex: z.enum(["male", "female", ""]),
   }),
   additionalGuests: z.array(guestSchema).optional(),
@@ -141,53 +141,40 @@ export async function POST(request: NextRequest) {
 
     let adultCount = 0;
     let kidCount = 0;
+    let teenCount = 0;
     let maleCount = 0;
     let femaleCount = 0;
     let totalPeople = 0;
 
+    // Helper function to process an individual
+    const processPerson = (person: { age: string; sex: string }) => {
+        totalPeople++;
+        if (person.age === "18+") {
+            adultCount++;
+        } else if (person.age === "13-17") {
+            teenCount++;
+        } else if (person.age === "1-12") {
+            kidCount++;
+        }
+
+        if (person.sex === "male") {
+            maleCount++;
+        } else if (person.sex === "female") {
+            femaleCount++;
+        }
+    };
+
     // Process registrant
-    const registrantAgeNum = parseInt(registrant.age, 10);
-    if (!isNaN(registrantAgeNum)) {
-      if (registrantAgeNum >= 18) {
-        adultCount++;
-      } else {
-        kidCount++;
-      }
-      if (registrant.sex === "male") {
-        maleCount++;
-      } else if (registrant.sex === "female") {
-        femaleCount++;
-      }
-      totalPeople++;
-    } else {
-        console.warn("[API /api/events] Registrant age was not a valid number after parsing:", registrant.age);
-    }
-    
+    processPerson(registrant);
 
     // Process additional guests
-    for (const guest of additionalGuests) {
-      const guestAgeNum = parseInt(guest.age, 10);
-      if (!isNaN(guestAgeNum)) {
-        if (guestAgeNum >= 18) {
-          adultCount++;
-        } else {
-          kidCount++;
-        }
-        if (guest.sex === "male") {
-          maleCount++;
-        } else if (guest.sex === "female") {
-          femaleCount++;
-        }
-        totalPeople++;
-      } else {
-        console.warn("[API /api/events] Guest age was not a valid number after parsing:", guest.age);
-      }
-    }
+    additionalGuests.forEach(processPerson);
 
     const participantData: EventParticipantInsert = {
       event_id: eventId,
       adult: adultCount > 0 ? adultCount : null,
       kids: kidCount > 0 ? kidCount : null,
+      teens: teenCount > 0 ? teenCount : null,
       males: maleCount > 0 ? maleCount : null,
       females: femaleCount > 0 ? femaleCount : null,
       people: totalPeople > 0 ? totalPeople : null,
@@ -203,7 +190,7 @@ export async function POST(request: NextRequest) {
     // Insert into event_participant
     const { data: participantRecord, error: participantInsertError } = await supabase
       .from("event_participant")
-      .insert(participantData)
+      .insert(participantData as any)
       .select()
       .single();
 

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter, SheetDescription } from "@/components/ui/sheet"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner";
@@ -43,6 +44,13 @@ export default function RegistrationFormThree({
   const [registrantSex, setRegistrantSex] = useState("")
   const [guests, setGuests] = useState<Guest[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (autoOpen && !hasSubmitted) {
+      setOpen(true);
+    }
+  }, [autoOpen, hasSubmitted]);
 
   const addGuest = () => {
     setGuests([...guests, { id: Date.now(), name: "", age: "", sex: "" }])
@@ -78,9 +86,19 @@ export default function RegistrationFormThree({
         setIsSubmitting(false);
         return;
     }
+    if (!registrantAge) {
+      toast.error("Please select an age range for yourself.");
+      setIsSubmitting(false);
+      return;
+    }
     for (const guest of guests) {
         if(!guest.name.trim()){
             toast.error(`Please enter a name for Guest ${guests.indexOf(guest) + 1}.`);
+            setIsSubmitting(false);
+            return;
+        }
+        if (!guest.age) {
+            toast.error(`Please select an age range for Guest ${guests.indexOf(guest) + 1}.`);
             setIsSubmitting(false);
             return;
         }
@@ -110,6 +128,7 @@ export default function RegistrationFormThree({
       toast.success(response.data.message || "Registration interest submitted successfully!");
       setOpen(false);
       resetForm();
+      setHasSubmitted(true);
     } catch (error: any) {
       console.error("Registration failed:", error);
       if (error.response) {
@@ -126,6 +145,7 @@ export default function RegistrationFormThree({
     <>
       <Button onClick={() => {
         setOpen(true);
+        setHasSubmitted(false);
       }} className="bg-enugu text-white hover:bg-enugu/90">
         Register Now
       </Button>
@@ -136,8 +156,8 @@ export default function RegistrationFormThree({
           resetForm();
         }
       }}>
-        <SheetContent className="sm:max-w-lg w-[90vw] overflow-y-auto"> {/* Adjusted width */}
-          <SheetHeader className="mb-4">
+        <SheetContent className="sm:max-w-lg w-[90vw] flex flex-col"> {/* Use flex column */}
+          <SheetHeader className="mb-4 px-6 pt-6">
             <SheetTitle>Register for: {eventTitle}</SheetTitle>
             {eventDate && ( 
               <SheetDescription className="pt-2" asChild>
@@ -159,159 +179,159 @@ export default function RegistrationFormThree({
             )}
           </SheetHeader>
           
-          <Separator className="my-4" />
+          <Separator />
 
-          <form onSubmit={handleSubmit} className="space-y-6 pb-16"> {/* Added padding-bottom for footer */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">Your Information</h3>
-              <div>
-                <Label htmlFor="registrantName">Name</Label>
-                <Input
-                  id="registrantName"
-                  type="text"
-                  value={registrantName}
-                  onChange={(e) => setRegistrantName(e.target.value)}
-                  required
-                  className="mt-1"
-                  placeholder="Your Full Name"
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div>
-                <Label htmlFor="registrantEmail">Email</Label>
-                <Input
-                  id="registrantEmail"
-                  type="email"
-                  value={registrantEmail}
-                  onChange={(e) => setRegistrantEmail(e.target.value)}
-                  required
-                  className="mt-1"
-                  placeholder="your.email@example.com"
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div>
-                <Label htmlFor="registrantAge">Age</Label>
-                <Input
-                  id="registrantAge"
-                  type="number"
-                  value={registrantAge}
-                  onChange={(e) => setRegistrantAge(e.target.value)}
-                  required
-                  min="0"
-                  className="mt-1"
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div>
-                <Label>Sex</Label>
-                <RadioGroup value={registrantSex} onValueChange={setRegistrantSex} className="flex gap-4 mt-1" disabled={isSubmitting}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="male" id="male" />
-                    <Label htmlFor="male">Male</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="female" id="female" />
-                    <Label htmlFor="female">Female</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-
-            <Separator />
-
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-medium">Additional Guests</h3>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={addGuest}
-                  className="flex items-center gap-1"
-                  disabled={isSubmitting}
-                >
-                  <Plus className="h-4 w-4" /> Add Guest
-                </Button>
-              </div>
-
-              {guests.map((guest, index) => (
-                <div key={guest.id} className="border p-4 rounded-md space-y-3">
-                  <div className="flex justify-between items-center">
-                    <h4 className="font-medium">Guest {index + 1}</h4>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon" // Made it icon button for cleaner look
-                      onClick={() => removeGuest(guest.id)}
-                      className="h-7 w-7 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/50"
-                      disabled={isSubmitting}
-                      aria-label="Remove guest"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <div>
-                    <Label htmlFor={`guest-name-${guest.id}`}>Name</Label>
-                    <Input
-                      id={`guest-name-${guest.id}`}
-                      type="text"
-                      value={guest.name}
-                      onChange={(e) => updateGuest(guest.id, "name", e.target.value)}
-                      required
-                      className="mt-1"
-                      placeholder="Guest's Full Name"
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor={`guest-age-${guest.id}`}>Age</Label>
-                    <Input
-                      id={`guest-age-${guest.id}`}
-                      type="number"
-                      value={guest.age}
-                      onChange={(e) => updateGuest(guest.id, "age", e.target.value)}
-                      required
-                      min="0"
-                      className="mt-1"
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  <div>
-                    <Label>Sex</Label>
-                    <RadioGroup
-                      value={guest.sex}
-                      onValueChange={(value) => updateGuest(guest.id, "sex", value)}
-                      className="flex gap-4 mt-1"
-                      disabled={isSubmitting}
-                    >
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="male" id={`guest-male-${guest.id}`} />
-                        <Label htmlFor={`guest-male-${guest.id}`}>Male</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="female" id={`guest-female-${guest.id}`} />
-                        <Label htmlFor={`guest-female-${guest.id}`}>Female</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
+          {/* Make form scrollable and grow */}
+          <div className="flex-grow overflow-y-auto">
+            <form id="registration-form" onSubmit={handleSubmit} className="space-y-6 p-6"> 
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Your Information</h3>
+                <div>
+                  <Label htmlFor="registrantName">Name</Label>
+                  <Input
+                    id="registrantName"
+                    type="text"
+                    value={registrantName}
+                    onChange={(e) => setRegistrantName(e.target.value)}
+                    required
+                    className="mt-1"
+                    placeholder="Your Full Name"
+                    disabled={isSubmitting}
+                  />
                 </div>
-              ))}
+                <div>
+                  <Label htmlFor="registrantEmail">Email</Label>
+                  <Input
+                    id="registrantEmail"
+                    type="email"
+                    value={registrantEmail}
+                    onChange={(e) => setRegistrantEmail(e.target.value)}
+                    required
+                    className="mt-1"
+                    placeholder="your.email@example.com"
+                    disabled={isSubmitting}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="registrantAge">Age</Label>
+                   <Select value={registrantAge} onValueChange={setRegistrantAge} required disabled={isSubmitting}>
+                      <SelectTrigger id="registrantAge" className="mt-1">
+                          <SelectValue placeholder="Select age range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                          <SelectItem value="1-12">1-12</SelectItem>
+                          <SelectItem value="13-17">13-17</SelectItem>
+                          <SelectItem value="18+">18+</SelectItem>
+                      </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label>Sex</Label>
+                  <RadioGroup value={registrantSex} onValueChange={setRegistrantSex} className="flex gap-4 mt-1" disabled={isSubmitting}>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="male" id="male" />
+                      <Label htmlFor="male">Male</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="female" id="female" />
+                      <Label htmlFor="female">Female</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+              </div>
 
-              {guests.length === 0 && (
-                <p className="text-sm text-muted-foreground text-center py-2">No additional guests added.</p>
-              )}
-            </div>
+              <Separator />
 
-            <SheetFooter className="fixed bottom-0 right-0 left-0 bg-background border-t p-4 sm:relative sm:bg-transparent sm:border-none sm:p-0"> {/* Sticky footer for mobile */}
-              <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={isSubmitting}>
-                Cancel
-              </Button>
-              <Button type="submit" className="bg-enugu text-white hover:bg-enugu/90" disabled={isSubmitting}>
-                {isSubmitting ? "Submitting..." : "Complete Registration"}
-              </Button>
-            </SheetFooter>
-          </form>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-medium">Additional Guests</h3>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={addGuest}
+                    className="flex items-center gap-1"
+                    disabled={isSubmitting}
+                  >
+                    <Plus className="h-4 w-4" /> Add Guest
+                  </Button>
+                </div>
+
+                {guests.map((guest, index) => (
+                  <div key={guest.id} className="border p-4 rounded-md space-y-3">
+                    <div className="flex justify-between items-center">
+                      <h4 className="font-medium">Guest {index + 1}</h4>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon" // Made it icon button for cleaner look
+                        onClick={() => removeGuest(guest.id)}
+                        className="h-7 w-7 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/50"
+                        disabled={isSubmitting}
+                        aria-label="Remove guest"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <div>
+                      <Label htmlFor={`guestName-${guest.id}`}>Name</Label>
+                      <Input
+                        id={`guestName-${guest.id}`}
+                        type="text"
+                        value={guest.name}
+                        onChange={(e) => updateGuest(guest.id, "name", e.target.value)}
+                        required
+                        className="mt-1"
+                        placeholder="Guest's Full Name"
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor={`guestAge-${guest.id}`}>Age</Label>
+                      <Select value={guest.age} onValueChange={(value) => updateGuest(guest.id, "age", value)} required disabled={isSubmitting}>
+                          <SelectTrigger id={`guestAge-${guest.id}`} className="mt-1">
+                              <SelectValue placeholder="Select age range" />
+                          </SelectTrigger>
+                          <SelectContent>
+                              <SelectItem value="1-12">1-12</SelectItem>
+                              <SelectItem value="13-17">13-17</SelectItem>
+                              <SelectItem value="18+">18+</SelectItem>
+                          </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>Sex</Label>
+                      <RadioGroup
+                        value={guest.sex}
+                        onValueChange={(value) => updateGuest(guest.id, "sex", value)}
+                        className="flex gap-4 mt-1"
+                        disabled={isSubmitting}
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="male" id={`male-${guest.id}`} />
+                          <Label htmlFor={`male-${guest.id}`}>Male</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="female" id={`female-${guest.id}`} />
+                          <Label htmlFor={`female-${guest.id}`}>Female</Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
+                  </div>
+                ))}
+
+                {guests.length === 0 && (
+                  <p className="text-sm text-muted-foreground text-center py-2">No additional guests added.</p>
+                )}
+              </div>
+            </form>
+          </div>
+
+          <SheetFooter className="border-t p-4">
+            <Button type="submit" form="registration-form" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit Registration"}
+            </Button>
+          </SheetFooter>
         </SheetContent>
       </Sheet>
     </>

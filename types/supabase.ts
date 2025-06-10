@@ -170,6 +170,7 @@ export type Database = {
           kids: number | null
           males: number | null
           people: number | null
+          teens: number | null
         }
         Insert: {
           adult?: number | null
@@ -180,6 +181,7 @@ export type Database = {
           kids?: number | null
           males?: number | null
           people?: number | null
+          teens?: number | null
         }
         Update: {
           adult?: number | null
@@ -190,6 +192,7 @@ export type Database = {
           kids?: number | null
           males?: number | null
           people?: number | null
+          teens?: number | null
         }
         Relationships: [
           {
@@ -468,6 +471,7 @@ export type Database = {
           file_name: string | null
           file_size_mb: number | null
           id: string
+          media_r2_key: string | null
           media_url: string | null
           title: string | null
           user_email: string
@@ -480,6 +484,7 @@ export type Database = {
           file_name?: string | null
           file_size_mb?: number | null
           id?: string
+          media_r2_key?: string | null
           media_url?: string | null
           title?: string | null
           user_email: string
@@ -492,6 +497,7 @@ export type Database = {
           file_name?: string | null
           file_size_mb?: number | null
           id?: string
+          media_r2_key?: string | null
           media_url?: string | null
           title?: string | null
           user_email?: string
