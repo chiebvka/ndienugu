@@ -219,10 +219,10 @@ export default function Galleryfeed({}: Props) {
 
     return (
       <div
-        className="relative group overflow-hidden rounded-lg bg-card shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col"
+        className="relative group overflow-hidden rounded-lg bg-card shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer h-80 flex flex-col"
         onClick={() => openImageLightbox(item)}
       >
-        <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-400">
+        <div className="relative w-full h-48 bg-gradient-to-br from-gray-200 to-gray-400 flex-shrink-0">
           {isVideo ? (
             thumbnailUrl ? (
               <>
@@ -269,15 +269,15 @@ export default function Galleryfeed({}: Props) {
             {isVideo ? <VideoIconLucide className="h-4 w-4" /> : <ImageIconLucide className="h-4 w-4" />}
           </div>
         </div>
-        <div className="p-3 sm:p-4 flex-grow">
+        <div className="p-3 sm:p-4 flex-1 flex flex-col min-h-0">
           <h3 className="text-base sm:text-lg font-semibold truncate text-card-foreground mb-1">{item.title}</h3>
           {item.description && (
-            <p className="text-xs text-muted-foreground line-clamp-1 mb-1">{item.description}</p>
+            <p className="text-xs text-muted-foreground line-clamp-2 mb-1">{item.description}</p>
           )}
           <p className="text-xs sm:text-sm text-muted-foreground mb-1">{new Date(item.date).toLocaleDateString()}</p>
           <p className="text-xs text-muted-foreground capitalize line-clamp-1">Category: {item.category}</p>
           {item.tags && item.tags.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-1">
+            <div className="mt-auto pt-2 flex flex-wrap gap-1">
               {item.tags.slice(0, 2).map(tag => (
                 <Badge key={tag.id} variant="secondary" className="text-xs bg-green-100 text-green-700 border-green-200 hover:bg-green-200">
                   {tag.name}
@@ -297,7 +297,7 @@ export default function Galleryfeed({}: Props) {
 
     const currentImage = selectedItemForLightbox.galleryImages?.[lightboxImageIndex];
     const isVideo = selectedItemForLightbox.mediaType === 'video';
-    const videoUrl = isVideo ? selectedItemForLightbox.galleryImages?.[0]?.image_url : null;
+    const videoUrl = isVideo ? selectedItemForLightbox.galleryImages?.[lightboxImageIndex]?.image_url : null;
     
         return (
           <>
@@ -317,7 +317,7 @@ export default function Galleryfeed({}: Props) {
             <div className="relative w-full aspect-video bg-black/90 flex items-center justify-center overflow-hidden">
                 {isVideo && videoUrl ? (
                   <video
-                      key={selectedItemForLightbox.id}
+                      key={`${selectedItemForLightbox.id}-${lightboxImageIndex}`}
                       src={videoUrl}
                       controls
                       autoPlay
@@ -343,7 +343,7 @@ export default function Galleryfeed({}: Props) {
                 )}
               </div>
     
-            {!isVideo && selectedItemForLightbox.galleryImages && selectedItemForLightbox.galleryImages.length > 1 && (
+            {selectedItemForLightbox.galleryImages && selectedItemForLightbox.galleryImages.length > 1 && (
                 <>
               <Button
                 variant="ghost"
