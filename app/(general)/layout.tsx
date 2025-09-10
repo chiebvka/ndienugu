@@ -1,11 +1,11 @@
 import { Geist } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { Toaster } from "@/components/ui/sonner";
 import PrivacyModalTrigger from "@/components/privacy-modal-trigger";
-import { Providers } from "./providers";
+import { Providers } from "../providers";
 
 
 const defaultUrl = process.env.VERCEL_URL
@@ -53,19 +53,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={geistSans.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
-        <Providers>
-        {/* <> */}
+        {/* <Providers> */}
+        <>
           <div className="min-h-screen flex flex-col">
-            {/* <Header /> */}
+            <Header />
             <main className="flex-1">
               {children}
             </main>
-            {/* <Footer /> */}
+            <Footer />
           </div>
           <Toaster richColors />
           <PrivacyModalTrigger />
-        {/* </> */}
-        </Providers>
+        </>
+        {/* </Providers> */}
       </body>
     </html>
   );
